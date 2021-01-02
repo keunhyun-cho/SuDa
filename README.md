@@ -1,7 +1,9 @@
-# Suda (react-native)
-동수다
+# SuDa
+동수다 앱 개발 
 
-# Development environment
+## Language
+react-native
+
 ## OS
 Windows 10
 ## Platform
