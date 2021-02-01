@@ -2,14 +2,14 @@ import React, {Component} from 'react';
 import {StyleSheet, View, Text, Image} from 'react-native';
 
 const SignAlert: () => React$Node = ({navigation}) => {
-  return (
+   return (
     <View style={styles.CenterArea}>
       <Text style={styles.Title1}>반갑습니다!</Text>
       <Text style={styles.Title2}>살고계신 동네를 알려주세요</Text>
       <Image 
         style={styles.TitleIcon} 
         source={require('SuDa/img/location.png')}
-        onLoad={() => navigation.navigate('SignOAuthPage')}
+        onLoad={() => setTimeout(()=>{navigation.navigate('SignOAuthPage')},3000)}
         ></Image>
     </View>
   );

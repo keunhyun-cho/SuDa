@@ -28,7 +28,7 @@ const Start: () => React$Node = ({navigation}) => {
             <Image
               source={require('SuDa/img/alert.jpg')}
               style={styles.mainImage}
-              onLoad={() => navigation.navigate('SignPage')}
+              onLoad={() => setTimeout(()=>{navigation.navigate('SignPage')},3000)}
             />
             <Text style={styles.highlight}>우리 동네 정보방</Text>
             <Text style={styles.sectionTitle}>동수다</Text>

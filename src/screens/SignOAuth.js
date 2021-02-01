@@ -1,24 +1,64 @@
 import React, {Component} from 'react';
 import {StyleSheet, View, Text, Image, TouchableOpacity} from 'react-native';
+import axios from 'axios';
+import { NavigationContainer } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
 
-const SignOAuth: () => React$Node = () => {
+class SignOAuth extends Component {
+ 
+  state = {
+    DongSu  : [],
+    loading : false,
+  }
+  componentDidMount() {
+    this.GetDongsu();  // 주소 API 호출
+  }
+  GetDongsu = async () => {
+    axios
+      .post("http://3.36.123.247/api/signUp",{
+        params : {siNm : '서울시',
+                  sggNm: '마포구',
+                  emdNm :'공덕동'},
+      })
+      .then(({ data }) => {
+        console.log(data);
+        this.setState({ 
+          loading: true,
+          DongSu: data.juso
+        });
+      })
+      .catch(e => {  // API 호출이 실패한 경우
+        console.error(e);  // 에러표시
+        this.setState({  
+          loading: false
+        });
+      });
+  };
+
+
+  render(){
+    const { navigation } = this.props;
     let isComplete = true; 
     let strTownName = '서울시 마포구 공덕동';
     let strTownNameAvailable = '공덕동';
-  
-    return (
+
+    return(
       <View style={styles.CenterArea}>
-        <Image style={styles.TitleIcon} source={require('SuDa/img/location.png')}></Image>
-        <Text style={styles.Title2}>살고계신 동네를 알려주세요</Text>
-        <TouchableOpacity style={styles.TownText}>
-          <Text>{strTownName}</Text>
-        </TouchableOpacity>
-        <Text style={styles.CompleteText}>{isComplete ? '완료' : '선택'}</Text>
-        <Text style={styles.ErrorText}>!{'\n'}현재 {strTownNameAvailable}만{'\n'}서비스 중입니다.</Text>
-      </View>
+      <Image style={styles.TitleIcon} source={require('SuDa/img/location.png')}></Image>
+      <Text style={styles.Title2}>살고계신 동네를 알려주세요</Text>
+      <TouchableOpacity style={styles.TownText}>
+        <Text>{this.state.DongSu}</Text>
+      </TouchableOpacity>
+      <Text onPress = {() => setTimeout(()=>{navigation.navigate('SignOAuthMainPage')},3000)}  
+            style={styles.CompleteText}>{isComplete ? '완료' : '선택'}</Text>
+      <Text style={styles.ErrorText}>!{'\n'}현재 {strTownNameAvailable}만{'\n'}서비스 중입니다.</Text>
+    </View>
     );
-  };
+  } 
+}
+
+
 
 const styles = StyleSheet.create({
   CenterArea:{

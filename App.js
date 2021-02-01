@@ -22,6 +22,8 @@ import StartPage from './src/screens/StartScreen';
 import SignPage from './src/screens/SignAlert';
 import SignOAuthPage from './src/screens/SignOAuth';
 import SignOAuthPopupPage from './src/screens/SignOAuthPopup';
+import SignOAuthMainPage from './src/screens/SignOAuthMain';
+
 
 const Stack = createStackNavigator();
 
@@ -33,6 +35,8 @@ const App: () => React$Node = () => {
         <Stack.Screen name="SignPage" component={SignPage} />
         <Stack.Screen name="SignOAuthPage" component={SignOAuthPage} />
         <Stack.Screen name="SignOAuthPopupPage" component={SignOAuthPopupPage} />
+        <Stack.Screen name="SignOAuthMainPage" component={SignOAuthMainPage} />
+
       </Stack.Navigator>
     </NavigationContainer>
   );
