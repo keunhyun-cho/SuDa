@@ -15,25 +15,29 @@ class SignOAuth extends Component {
     this.GetDongsu();  // 주소 API 호출
   }
   GetDongsu = async () => {
-    axios
-      .post("http://3.36.123.247/api/signUp",{
-        params : {siNm : '서울시',
-                  sggNm: '마포구',
-                  emdNm :'공덕동'},
-      })
-      .then(({ data }) => {
-        console.log(data);
-        this.setState({ 
-          loading: true,
-          DongSu: data.juso
-        });
-      })
-      .catch(e => {  // API 호출이 실패한 경우
-        console.error(e);  // 에러표시
-        this.setState({  
-          loading: false
-        });
-      });
+    var params = new URLSearchParams();
+    params.append('doc_number', this.no);
+    params.append('doc_password', this.doc_password);
+
+    // axios
+    //   .post("http://3.36.123.247/api/signUp",{
+    //     params : {siNm : '서울시',
+    //               sggNm: '마포구',
+    //               emdNm :'공덕동'},
+    //   })
+    //   .then(({ data }) => {
+    //     console.log(data);
+    //     this.setState({ 
+    //       loading: true,
+    //       DongSu: data.juso
+    //     });
+    //   })
+    //   .catch(e => {  // API 호출이 실패한 경우
+    //     console.error(e);  // 에러표시
+    //     this.setState({  
+    //       loading: false
+    //     });
+    //   });
   };
 
 
@@ -48,7 +52,7 @@ class SignOAuth extends Component {
       <Image style={styles.TitleIcon} source={require('SuDa/img/location.png')}></Image>
       <Text style={styles.Title2}>살고계신 동네를 알려주세요</Text>
       <TouchableOpacity style={styles.TownText}>
-        <Text>{this.state.DongSu}</Text>
+        <Text>{strTownName}</Text>
       </TouchableOpacity>
       <Text onPress = {() => setTimeout(()=>{navigation.navigate('SignOAuthMainPage')},3000)}  
             style={styles.CompleteText}>{isComplete ? '완료' : '선택'}</Text>
