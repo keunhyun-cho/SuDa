@@ -4,6 +4,8 @@ import axios from 'axios';
 
 
 class SignOAuthMain extends React.Component {
+
+
     state = {
         modalVisible: false,
     };
@@ -16,6 +18,7 @@ class SignOAuthMain extends React.Component {
     }
 
     render() {
+        const { navigation } = this.props;
         return (
 
             
@@ -98,6 +101,7 @@ class SignOAuthMain extends React.Component {
                                     style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
                                     onPress={() => {
                                         this.setModalVisible(!this.state.modalVisible);
+                                        setTimeout(()=>{navigation.navigate('SudaMainPage')},1000)
                                     }}>
                                     <Text
                                         style={{ color: 'white', fontSize: 14 }}

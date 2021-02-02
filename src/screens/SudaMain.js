@@ -19,7 +19,7 @@ const bottomNav = createBottomTabNavigator(
 );
  
 // Navigator를 감싸는 AppContatiner 생성
-const AppContatiner= createAppContainer(bottomNav);
+const AppContatiner = createAppContainer(bottomNav);
  
 export default class SudaMain extends Component{
     render(){
