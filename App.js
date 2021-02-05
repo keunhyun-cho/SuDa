@@ -7,15 +7,6 @@
  */
 import 'react-native-gesture-handler';
 import React from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  View,
-  Text,
-  StatusBar,
-  Image,
-} from 'react-native';
-
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import StartPage from './src/screens/StartScreen';
@@ -23,6 +14,7 @@ import SignPage from './src/screens/SignAlert';
 import SignOAuthPage from './src/screens/SignOAuth';
 import SignOAuthMainPage from './src/screens/SignOAuthMain';
 import SudaMainPage  from './src/screens/SudaMain';
+import SudaAddChatPage  from './src/screens/SudaAddChat';
 
 
 const Stack = createStackNavigator();
@@ -36,7 +28,7 @@ const App: () => React$Node = () => {
         <Stack.Screen name="SignOAuthPage" component={SignOAuthPage} />
         <Stack.Screen name="SignOAuthMainPage" component={SignOAuthMainPage} />
         <Stack.Screen name="SudaMainPage" component={SudaMainPage} />
-
+        <Stack.Screen name="SudaAddChatPage" options={{title:'게시', headerTintColor:'#50bcdf'}} component={SudaAddChatPage} />
       </Stack.Navigator>
     </NavigationContainer>
   );
