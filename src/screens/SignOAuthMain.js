@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
 import {StyleSheet, View, Text, Image, Modal, TouchableHighlight} from 'react-native';
 import axios from 'axios';
-
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
 class SignOAuthMain extends React.Component {
 
-
+     
     state = {
         modalVisible: false,
     };
@@ -19,9 +20,9 @@ class SignOAuthMain extends React.Component {
 
     render() {
         const { navigation } = this.props;
+        // const LoginId = navigation.navigate.getParam('LoginId');
+        console.log(this.props.params)
         return (
-
-            
             <View
                 style = {{ flex: 1, }}
                 

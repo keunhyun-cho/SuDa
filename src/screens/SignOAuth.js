@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
-import {StyleSheet, View, Text, Image, TouchableOpacity} from 'react-native';
+import {StyleSheet, View, Text, Image, TouchableOpacity, Alert} from 'react-native';
 import axios from 'axios';
 import { NavigationContainer } from '@react-navigation/native';
-import { useNavigation } from '@react-navigation/native';
-
+import { createStackNavigator } from '@react-navigation/stack';
 
 class SignOAuth extends Component {
  
@@ -12,49 +11,87 @@ class SignOAuth extends Component {
     loading : false,
   }
   componentDidMount() {
+    console.log('componentDidMount')
     this.GetDongsu();  // 주소 API 호출
   }
   GetDongsu = async () => {
-    var params = new URLSearchParams();
-    params.append('doc_number', this.no);
-    params.append('doc_password', this.doc_password);
+    console.log('getDongsu');
+    axios
+      .get("http://3.36.123.247/api/signUp/juso",{
+        typeCd : 1,
+      })
+      .then(({ data }) => {
+        console.log(data);
+        this.setState({ 
+          loading: true,
+          DongSu: data.juso
+        });
+      })
+      .catch(e => {  // API 호출이 실패한 경우
+        console.error(e);  // 에러표시
+        this.setState({  
+          loading: false
+        });
+      });
+      console.log('getDongsuEnd');
 
-    // axios
-    //   .post("http://3.36.123.247/api/signUp",{
-    //     params : {siNm : '서울시',
-    //               sggNm: '마포구',
-    //               emdNm :'공덕동'},
-    //   })
-    //   .then(({ data }) => {
-    //     console.log(data);
-    //     this.setState({ 
-    //       loading: true,
-    //       DongSu: data.juso
-    //     });
-    //   })
-    //   .catch(e => {  // API 호출이 실패한 경우
-    //     console.error(e);  // 에러표시
-    //     this.setState({  
-    //       loading: false
-    //     });
-    //   });
   };
+
+  SetSignUp = async () => {
+    //setTimeout(()=>{navigation.navigate('SignOAuthMainPage')},3000)
+    const { navigation } = this.props;
+    axios
+    .post("http://3.35.202.156/api/signUp",{
+      siNm : '서울시',
+      sggNm :  '마포구',
+      emdNm : '공덕동',
+    })
+    .then(({ data }) => {
+      console.log(data);
+      if(data.resultCode=='00'){
+        this.props.navigation.navigate('SignOAuthMainPage',{
+          LoginId : data.memberNm
+        });
+
+      
+      }else{
+        Alert.alert(
+          "서비스 작업중 입니다.",
+          "앱 재 로그인 바랍니다.",
+          [{
+              text: "확인",
+              onPress: () => console.log("OK Press"),
+           }],
+          { cancelable: false }
+        );
+      }
+    
+    })
+    .catch(e => {  // API 호출이 실패한 경우
+      console.error(e);  // 에러표시
+      this.setState({  
+        loading: false
+      });
+    });
+  }
 
 
   render(){
+
     const { navigation } = this.props;
     let isComplete = true; 
     let strTownName = '서울시 마포구 공덕동';
     let strTownNameAvailable = '공덕동';
 
     return(
+      
       <View style={styles.CenterArea}>
       <Image style={styles.TitleIcon} source={require('SuDa/img/location.png')}></Image>
       <Text style={styles.Title2}>살고계신 동네를 알려주세요</Text>
       <TouchableOpacity style={styles.TownText}>
         <Text>{strTownName}</Text>
       </TouchableOpacity>
-      <Text onPress = {() => setTimeout(()=>{navigation.navigate('SignOAuthMainPage')},3000)}  
+      <Text onPress = {this.SetSignUp}  
             style={styles.CompleteText}>{isComplete ? '완료' : '선택'}</Text>
       <Text style={styles.ErrorText}>!{'\n'}현재 {strTownNameAvailable}만{'\n'}서비스 중입니다.</Text>
     </View>

@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import {StyleSheet, View, Text, Image} from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
 const SignAlert: () => React$Node = ({navigation}) => {
    return (
