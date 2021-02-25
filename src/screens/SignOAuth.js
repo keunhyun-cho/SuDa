@@ -47,12 +47,10 @@ class SignOAuth extends Component {
       emdNm : '공덕동',
     })
     .then(({ data }) => {
-      console.log(data);
+      console.log(data)
       if(data.resultCode=='00'){
-        this.props.navigation.navigate('SignOAuthMainPage',{
-          LoginId : data.memberNm
-        });
-
+        
+        navigation.navigate('SignOAuthMainPage',{LoginId : data.data.memberNm});
       
       }else{
         Alert.alert(

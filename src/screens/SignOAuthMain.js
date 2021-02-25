@@ -20,8 +20,10 @@ class SignOAuthMain extends React.Component {
 
     render() {
         const { navigation } = this.props;
-        // const LoginId = navigation.navigate.getParam('LoginId');
-        console.log(this.props.params)
+        const DongSuId = this.props.route.params.LoginId.slice(0,2) + '주민' + this.props.route.params.LoginId.split('_')[1];
+        console.log(DongSuId);
+
+
         return (
             <View
                 style = {{ flex: 1, }}
@@ -58,7 +60,7 @@ class SignOAuthMain extends React.Component {
                                     alignSelf:'flex-start',
                                     color:'#00a4ff'
                                     }}
-                            >공덕주민76 님 </Text>
+                            >{DongSuId +' 님'}  </Text>
                             <Text
                                  style={{ fontSize: 18, 
                                     marginLeft : 10,
