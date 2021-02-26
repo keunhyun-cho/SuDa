@@ -6,7 +6,6 @@ import SudaTabHome from './screens_bottom/SudaTabHome';
 import SudaTabInfo from './screens_bottom/SudaTabInfo';
 import SudaTabSet from './screens_bottom/SudaTabSet';
 import { createAppContainer } from 'react-navigation';
-import ActionButton from 'react-native-action-button';
 
 
 // BottomTabNavigator생성
@@ -26,11 +25,11 @@ export default class SudaMain extends Component{
     render() {
         const { navigation } = this.props;
         return (
-            // <AppContainer></AppContainer>
+            <AppContainer></AppContainer>
                
-            <View style={{flex:1}}>
-                <ActionButton buttonColor="#50bcdf" onPress={() => navigation.navigate('SudaAddChatPage')} />
-            </View> 
+            // <View style={{flex:1}}>
+            //     <ActionButton buttonColor="#50bcdf" onPress={() => navigation.navigate('SudaAddChatPage')} />
+            // </View> 
         );
     }
 }

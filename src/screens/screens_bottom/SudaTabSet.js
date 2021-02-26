@@ -1,11 +1,89 @@
 import React,{Component} from 'react';
-import {View, Text} from 'react-native';
+import {View, Text,TouchableHighlight} from 'react-native';
+import ToggleSwitch from 'toggle-switch-react-native';
+
 export default class SudaTabSet extends Component {
     render(){
         return(
-            <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
-                <Text>SudaTabSet</Text>
+            
+            <View
+            style={{
+                flex: 1,
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+                backgroundColor : '#FFFFFF'
+            }}
+        >
+            <View style={{
+                width: 300,
+                height: 500,
+                borderRadius: 20
+            }}>
+                 <Text
+                     style={{
+                        marginTop:30, 
+                        fontSize: 22, 
+                        alignSelf:'flex-start',
+                        color:'#00a4ff'
+                        }}
+                >반갑습니다! </Text>
+                <Text
+                    style={{ fontSize: 14,  marginTop:20}}
+                >
+                    동수다는 우리동네 정보방, 수다방, 사랑방 입니다.{"\n"}
+                    집앞 마트 타임세일에서 지금 무엇을 팔고있을까? 아침에 고장 난 엘리베이터가 지금은 괜찮을까? 새로생긴 맛집은 어떨까?{"\n"}{"\n"}
+                    작은 궁금증에서 부터 안정과 치안에 이르기 까지, 동네에서 일어나는 다양한 일들을 함께 나누어보세요. 동수다는 이웃과 함께하며 서로 힘이되고자 하는 마음을 위해 태어났습니다. {"\n"}
+                    동네 생활을 함께 만들어 가보세요.{"\n"}{"\n"}
+                    나눈만큼 풍성해지는 마음 따듯하고 살기 좋은 동네, 다양한 이웃들과 함께 만들어갈수 있기를 바랍니다.{"\n"}
+                </Text>
+                <Text
+                     style={{ fontSize: 14, 
+                        textAlign :'right',
+                        color : '#727272',
+                        marginBottom:20
+                        }}
+                >동수다 팀 드림.</Text>
+
+                <View style={{
+                 
+                }}>
+                    <ToggleSwitch
+                            isOn={false}
+                            onColor="green"
+                            offColor="#00a4ff"
+                            label="알림 받기"
+                            labelStyle={{ fontSize: 16, color: "black", fontWeight: "900" }}
+                            size="medium"
+                            onToggle={isOn => console.log("changed to : ", isOn)}
+                            />
+                    </View>
+                            <TouchableHighlight
+                                    style={{ flex: 1, marginTop:10, justifyContent: 'center', alignItems: 'flex-start', backgroundColor:'#FFFFFF',borderTopWidth:1, borderColor:'#727272' }}
+                                    onPress={() => {
+                                      console.log("확인")
+                                    }}>
+                                    
+                                    <Text
+                                        style={{ fontSize: 16 }}
+                                    >동수다 팀에게 연락하기</Text>
+                                </TouchableHighlight>
             </View>
+           
+                {/* <View style={{
+                    flex: 1,
+                    justifyContent: "center",
+                    alignItems: "left",
+                }}>
+                    <Text
+                     style={{ fontSize: 14, 
+                        color : '#727272'
+                        }}
+                >동수다 팀에게 연락하기.</Text>
+                </View> */}
+
+            </View>
+
         );
     }
 }
