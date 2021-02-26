@@ -28,7 +28,7 @@ const App: () => React$Node = () => {
         <Stack.Screen name="SignOAuthPage" component={SignOAuthPage} />
         <Stack.Screen name="SignOAuthMainPage" component={SignOAuthMainPage} />
         <Stack.Screen name="SudaMainPage" component={SudaMainPage} />
-        <Stack.Screen name="SudaAddChatPage" options={{title:'게시', headerTintColor:'#50bcdf'}} component={SudaAddChatPage} />
+        <Stack.Screen name="SudaAddChatPage" component={SudaAddChatPage} />
       </Stack.Navigator>
     </NavigationContainer>
   );
