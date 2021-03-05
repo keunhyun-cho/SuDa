@@ -30,7 +30,7 @@ export default class SudaMain extends Component{
             
             <View style={{flex:1}}>
                 <AppContainer/>
-                <ActionButton buttonColor="#50bcdf" onPress={() => navigation.navigate('SudaAddChatPage')} />
+                <ActionButton style={{marginBottom:30}} buttonColor="#50bcdf" onPress={() => navigation.navigate('SudaAddChatPage')} />
             </View> 
         );
     }
