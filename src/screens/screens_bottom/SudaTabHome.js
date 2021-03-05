@@ -8,7 +8,6 @@ export default class SudaTabHome extends Component {
             <Icon name='ios-home' style={{ color: tintColor }} />
         )
     }
-
     render(){
         return(
             <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
