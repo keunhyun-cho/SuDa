@@ -7,17 +7,46 @@ import SudaTabInfo from './screens_bottom/SudaTabInfo';
 import SudaTabSet from './screens_bottom/SudaTabSet';
 import { createAppContainer } from 'react-navigation';
 import ActionButton from 'react-native-action-button';
-
+import { Icon } from 'native-base'; 
 
 
 // BottomTabNavigator생성
 const bottomNav = createBottomTabNavigator(
     {
-        "HomeTab": {screen:SudaTabHome}, 
-        "AlertTab": {screen:SudaTabAlert},
+        "Home Tab": {screen:SudaTabHome, navigationOptions: {
+            tabBarIcon: ({ focused, tintColor }) => <Icon name='ios-home' style={{ color: tintColor }} />
+          } }, 
+        "AlertTab": {screen:SudaTabAlert, navigationOptions: {
+            tabBarIcon: ({ focused, tintColor }) => <Icon name='ios-search' style={{ color: tintColor }} />
+              } },
         "InfoTab": {screen:SudaTabInfo},
         "SetTab" : {screen:SudaTabSet}
-    }
+    }, {
+        // animationEnabled: true,
+        // swipeEnabled: true,
+        // tabBarPosition: "bottom",
+        tabBarOptions: {
+          style: {
+            backgroundColor:'white'
+          },
+          iconStyle: { 
+            ...Platform.select({
+              ios:{
+                height: 35,
+                marginBottom: 20
+              }
+            }) 
+          },
+          activeTintColor: '#000',
+          inactiveTintColor: '#d1cece',
+          upperCaseLabel: false,
+          showLabel: false,
+          showIcon: true,
+        },
+        // defaultNavigationOptions: {
+        //   header: null
+        // }
+      }
 );
  
 // Navigator를 감싸는 AppContatiner 생성

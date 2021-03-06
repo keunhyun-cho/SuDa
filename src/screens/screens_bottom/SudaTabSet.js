@@ -1,8 +1,35 @@
 import React,{Component} from 'react';
 import {View, Text,TouchableHighlight} from 'react-native';
 import ToggleSwitch from 'toggle-switch-react-native';
+import Mailer from 'react-native-mail';
 
 export default class SudaTabSet extends Component {
+
+    handleEmail = () => {
+        Mailer.mail({
+          subject: 'need help',
+          recipients: ['rmsgus33@naver.com'],
+          ccRecipients: ['supportCC@example.com'],
+          bccRecipients: ['supportBCC@example.com'],
+          body: '<b>문의 드립니다.</b>',
+          isHTML: true,
+          attachment: {
+            path: '',  // The absolute path of the file from which to read data.
+            type: '',   // Mime Type: jpg, png, doc, ppt, html, pdf, csv
+            name: '',   // Optional: Custom filename for attachment
+          }
+        }, (error, event) => {
+          Alert.alert(
+            error,
+            event,
+            [
+              {text: 'Ok', onPress: () => console.log('OK: Email Error Response')},
+              {text: 'Cancel', onPress: () => console.log('CANCEL: Email Error Response')}
+            ],
+            { cancelable: true }
+          )
+        });
+      }
     render(){
         return(
             
@@ -60,10 +87,7 @@ export default class SudaTabSet extends Component {
                     </View>
                             <TouchableHighlight
                                     style={{ flex: 1, marginTop:10, justifyContent: 'center', alignItems: 'flex-start', backgroundColor:'#FFFFFF',borderTopWidth:1, borderColor:'#727272' }}
-                                    onPress={() => {
-                                      console.log("확인")
-                                    }}>
-                                    
+                                    onPress={this.handleEmail}>
                                     <Text
                                         style={{ fontSize: 16 }}
                                     >동수다 팀에게 연락하기</Text>
