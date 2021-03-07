@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
 import {StyleSheet, View, Text, Image, TouchableOpacity, Alert} from 'react-native';
 import axios from 'axios';
+import GLOBAL from './Global.js';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import Global from './Global';
 
 class SignOAuth extends Component {
  
@@ -39,6 +41,8 @@ class SignOAuth extends Component {
 
   SetSignUp = async () => {
     //setTimeout(()=>{navigation.navigate('SignOAuthMainPage')},3000)
+    let signUpData, loginData;
+
     const { navigation } = this.props;
     axios
     .post("http://3.35.202.156/api/signUp",{
@@ -47,11 +51,37 @@ class SignOAuth extends Component {
       emdNm : '공덕동',
     })
     .then(({ data }) => {
-      console.log(data)
-      if(data.resultCode=='00'){
+      signUpData = data;
+      console.log('/api/signUp ===> ' + JSON.stringify(signUpData));
+
+      if(signUpData.resultCode=='00'){
+        axios
+        .post("http://3.35.202.156/api/login", {
+          memberId:signUpData.data.memberId,
+          password:signUpData.data.password
+        })
+        .then(({ data }) => {
+          loginData = data;
+          console.log('/api/login ===> ' + JSON.stringify(loginData));
+
+          if(loginData.resultCode=='00'){
+            GLOBAL.TOKEN = loginData.data.token;
+            console.log('GLOBAL.TOKEN ===> ' + GLOBAL.TOKEN);
+
+            navigation.navigate('SignOAuthMainPage',{LoginId : signUpData.data.memberNm});
+          }else{
+            Alert.alert(
+              "서비스 작업중 입니다.",
+              "앱 재 로그인 바랍니다.",
+              [{
+                  text: "확인",
+                  onPress: () => console.log("OK Press"),
+              }],
+              { cancelable: false }
+            );
+          }
         
-        navigation.navigate('SignOAuthMainPage',{LoginId : data.data.memberNm});
-      
+        })
       }else{
         Alert.alert(
           "서비스 작업중 입니다.",

@@ -1,6 +1,7 @@
 import React,{Component, useState} from 'react';
 import {StyleSheet, View, TextInput, Text, Button} from 'react-native';
 import axios from 'axios';
+import GLOBAL from './Global.js';
  
 export default class SudaTabAlert extends Component {
     state = {
