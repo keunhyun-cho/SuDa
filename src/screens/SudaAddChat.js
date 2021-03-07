@@ -5,15 +5,14 @@ import GLOBAL from './Global.js';
  
 export default class SudaTabAlert extends Component {
     state = {
-        title: '',
-        contents: '',
-    }
+        title:'',
+        contents:'',
+        curTitleLength:0,
+        maxTitleLength:30,
+    }; 
 
     render(){
         const { navigation } = this.props;
-        let curLength = 0;
-        let maxLength = 30;
-        
         return(
             <View style={styles.body}>
                 <Button title="게시" onPress={() => {
@@ -32,9 +31,14 @@ export default class SudaTabAlert extends Component {
                       }
                     })
                 }}></Button>
-                <TextInput style={styles.TextInputTitle} placeholder="제목을 입력하세요" onChangeText={title => this.setState({title})} value={this.state.title}/>
-                <Text style={styles.MaxTextInputTitle}>{curLength}/{maxLength}</Text>
-                <TextInput style={styles.TextInputContent} placeholder="내용을 입력하세요." onChangeText={contents => this.setState({contents})} value={this.state.contents}/>
+                <TextInput style={styles.TextInputTitle} placeholder="제목을 입력하세요" maxLength={30} value={this.state.title} onChangeText={title => {
+                    this.setState({title});
+                    this.setState({curTitleLength:title.length});
+                }}/>
+                <Text id style={styles.MaxTextInputTitle}>{this.state.curTitleLength}/{this.state.maxTitleLength}</Text>
+                <TextInput style={styles.TextInputContent} placeholder="내용을 입력하세요." value={this.state.contents} onChangeText={contents => {
+                    this.setState({contents});
+                }}/>
             </View>
         );
     }
