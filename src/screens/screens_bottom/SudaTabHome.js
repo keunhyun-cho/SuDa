@@ -1,6 +1,5 @@
 import React,{Component} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
-import GLOBAL from './Global.js';
  
 export default class SudaTabHome extends Component {
     render(){
