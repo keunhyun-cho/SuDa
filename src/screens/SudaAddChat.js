@@ -10,6 +10,7 @@ export default class SudaTabAlert extends Component {
     }
 
     render(){
+        const { navigation } = this.props;
         let curLength = 0;
         let maxLength = 30;
         
@@ -20,20 +21,12 @@ export default class SudaTabAlert extends Component {
                     .post("http://3.35.202.156/api/localPost",{
                         title:this.state.title,
                         contents:this.state.contents,
-                    })
+                    }, {headers:{'X-AUTH-TOKEN':GLOBAL.TOKEN}})
                     .then(({ data }) => {
-                      console.log(data);
+                      console.log('localPostData ===> ' + JSON.stringify(data));
+
                       if(data.resultCode=='00'){
-                        Alert.alert(
-                          "게시글이 등록되었습니다.",
-                          [{
-                              text: "확인",
-                              onPress: () => console.log("OK Press"),
-                           }],
-                          { cancelable: false }
-                        );
                         navigation.navigate('SudaMainPage');
-                      
                       }else{
                         
                       }
