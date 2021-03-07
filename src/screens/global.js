@@ -1,1 +1,3 @@
-global.token = '';
+module.exports = {
+    TOKEN:'',
+};
