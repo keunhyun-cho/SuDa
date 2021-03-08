@@ -59,5 +59,4 @@ buck-out/
 /ios/Pods/
 
 # Package-lock.json 
-package.json
 package-lock.json
