@@ -7,11 +7,12 @@ export default class SudaTabSet extends Component {
 
     handleEmail = () => {
         Mailer.mail({
-          subject: 'need help',
-          recipients: ['rmsgus33@naver.com'],
-          ccRecipients: ['supportCC@example.com'],
-          bccRecipients: ['supportBCC@example.com'],
-          body: '<b>문의 드립니다.</b>',
+          subject: '동수타 팀에게 연락하기',
+          recipients: ['dongsudasuda@gmail.com'],
+          ccRecipients: ['rmsgus33@naver.com'],
+          body: '<b>문의 드립니다.</b><br><br>' +
+                '동네 : 서울 마포구 공덕동<br>' + 
+                'ID   : ',
           isHTML: true,
           attachment: {
             path: '',  // The absolute path of the file from which to read data.
