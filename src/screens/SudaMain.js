@@ -15,13 +15,17 @@ import Icon from 'react-native-vector-icons/Ionicons';
 const bottomNav = createBottomTabNavigator(
     {
         "Home Tab": {screen:SudaTabHome, navigationOptions: {
-            tabBarIcon: ({ focused, tintColor }) => <Icon name='ios-menu' size={30} />
-          } }, 
+            tabBarIcon: ({ focused, tintColor }) => <Icon name='ios-home' size={20} style={{ color: tintColor }}/>
+          }}, 
         "AlertTab": {screen:SudaTabAlert, navigationOptions: {
-            tabBarIcon: ({ focused, tintColor }) => <Icon name='ios-search' style={{ color: tintColor }} />
-              } },
-        "InfoTab": {screen:SudaTabInfo},
-        "SetTab" : {screen:SudaTabSet}
+            tabBarIcon: ({ focused, tintColor }) => <Icon name='ios-notifications-sharp' size={20} style={{ color: tintColor }} />
+          }},
+        "InfoTab": {screen:SudaTabInfo, navigationOptions: {
+            tabBarIcon: ({ focused, tintColor }) => <Icon name='ios-person' size={20} style={{ color: tintColor }} />
+          }},
+        "SetTab" : {screen:SudaTabSet, navigationOptions: {
+            tabBarIcon: ({ focused, tintColor }) => <Icon name='ios-settings' size={20} style={{ color: tintColor }} />
+          }}
     }, {
         // animationEnabled: true,
         // swipeEnabled: true,
@@ -38,7 +42,7 @@ const bottomNav = createBottomTabNavigator(
               }
             }) 
           },
-          activeTintColor: '#000',
+          activeTintColor: '#00a4ff',
           inactiveTintColor: '#d1cece',
           upperCaseLabel: false,
           showLabel: false,
