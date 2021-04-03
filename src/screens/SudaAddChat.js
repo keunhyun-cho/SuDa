@@ -28,13 +28,13 @@ export default class SudaTabAlert extends Component {
                             navigation.navigate("SudaMainPage");
                     })
                 }}></Button>
-                <TextInput style={{color:"#686868", fontSize:19, height:50, borderBottomColor:"#50bcda", borderBottomWidth:0.5}} placeholder="제목을 입력하세요" maxLength={30} value={this.state.title} onChangeText={title => {
-                    this.setState({title});
-                    this.setState({curTitleLength:title.length});
+                <TextInput style={{color:"#686868", fontSize:19, height:50, borderBottomColor:"#50bcda", borderBottomWidth:0.5}} placeholder="제목을 입력하세요" maxLength={30} value={this.state.title} onChangeText={(text) => {
+                    this.setState({title:text});
+                    this.setState({curTitleLength:text.length});
                 }}/>
                 <Text id style={{marginTop:5, color:"#666666", fontSize:13, alignSelf:"flex-end"}}>{this.state.curTitleLength}/{this.state.maxTitleLength}</Text>
-                <TextInput style={{marginTop:10, color:"#686868", fontSize:17, height:500, textAlignVertical:"top"}} placeholder="내용을 입력하세요" value={this.state.contents} onChangeText={contents => {
-                    this.setState({contents});
+                <TextInput style={{marginTop:10, color:"#686868", fontSize:17, height:500, textAlignVertical:"top"}} placeholder="내용을 입력하세요" value={this.state.contents} onChangeText={(text) => {
+                    this.setState({contents:text});
                 }}/>
             </View>
         );
