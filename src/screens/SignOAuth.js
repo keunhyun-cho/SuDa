@@ -52,8 +52,7 @@ class SignOAuth extends Component {
     })
     .then(({ data }) => {
       signUpData = data;
-      console.log('/api/signUp ===> ' + JSON.stringify(signUpData));
-      console.log('test=>'+ signUpData.resultCode);
+      
       if(signUpData.resultCode=='00'){
         axios
         .post("http://3.35.202.156/api/login", {
@@ -62,8 +61,11 @@ class SignOAuth extends Component {
         })
         .then(({ data }) => {
           loginData = data;
-          console.log('/api/login ===> ' + JSON.stringify(loginData));
-          if( loginData.resultCode == '00'){
+
+          if(loginData.resultCode == '00'){
+            GLOBAL.MEMBERID = signUpData.data.memberId;
+            console.log('GLOBAL.MEMBERID ===> ' + GLOBAL.MEMBERID);
+
             GLOBAL.TOKEN = loginData.data.token;
             console.log('GLOBAL.TOKEN ===> ' + GLOBAL.TOKEN);
 

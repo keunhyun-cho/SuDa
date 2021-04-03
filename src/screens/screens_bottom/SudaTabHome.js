@@ -1,52 +1,76 @@
 import Icon from 'react-native-vector-icons/Ionicons';
 import React, {Component} from "react";
-import {View, Text} from "react-native";
-import DropDownPicker from "react-native-dropdown-picker";
+import {View, Text, ScrollView} from "react-native";
+import ModalDropDown from "react-native-modal-dropdown";
 import GLOBAL from "../Global.js";
 import axios from "axios";
+
+class PostList extends Component {
+    constructor(props) {
+        super(props);
+        console.log("in constructor");
+    }
+
+    state = {
+        data:[]
+    };
+
+    getData = async () => {
+        let data = await axios.get("http://3.35.202.156/api/localPost", {headers:{"X-AUTH-TOKEN":GLOBAL.TOKEN}, data:{}})
+        
+        this.setState({data:data.data.data.localPosts});
+        console.log("in getData = " + JSON.stringify(this.state.data));
+    }
+
+    componentDidMount() {
+        console.log("in componentDidMount");
+        this.getData();
+    }
+
+    componentDidUpdate() {
+        console.log("in componentDidUpdate");
+    }
  
-export default class SudaTabHome extends Component {
-    render(){
-        function ChatLists() {
-            // axios.get("http://3.35.202.156/api/localPost", {}, {headers:{"X-AUTH-TOKEN":GLOBAL.TOKEN}})
-            // .then(({data}) => {
-            //     console.log("localPostData ===> " + JSON.stringify(data));
-            // })
+    componentWillUnmount() {
+        console.log("in componentWillUnmount");
+    }
 
-            // let chatList = [];
-            var chatList = [{chatId:"1", title:"가입알림", contents:"공덕주민29님이 새로 오셨어요.\n반갑게 맞이해주세요.", memberNm:"공덕주민29", repleCnt:0, likeCnt:0, isILike:false, postDate:"2021-03-07", postToken:"TOKEN29"}, 
-                            {chatId:"2", title:"가입알림", contents:"공덕주민28님이 새로 오셨어요.\n반갑게 맞이해주세요.", memberNm:"공덕주민28", repleCnt:2, likeCnt:1, isILike:true,  postDate:"2021-03-07", postToken:"TOKEN28"}, 
-                            {chatId:"3", title:"가입알림", contents:"공덕주민27님이 새로 오셨어요.\n반갑게 맞이해주세요.", memberNm:"공덕주민27", repleCnt:1, likeCnt:1, isILike:false, postDate:"2021-03-06", postToken:"TOKEN27"}, 
-                            {chatId:"4", title:"가입알림", contents:"공덕주민26님이 새로 오셨어요.\n반갑게 맞이해주세요.", memberNm:"공덕주민26", repleCnt:0, likeCnt:3, isILike:true,  postDate:"2021-03-04", postToken:"TOKEN26"}, 
-                            {chatId:"5", title:"가입알림", contents:"공덕주민25님이 새로 오셨어요.\n반갑게 맞이해주세요.", memberNm:"공덕주민25", repleCnt:1, likeCnt:1, isILike:true,  postDate:"2021-03-02", postToken:"TOKEN25"}, 
-                            {chatId:"6", title:"가입알림", contents:"공덕주민24님이 새로 오셨어요.\n반갑게 맞이해주세요.", memberNm:"공덕주민24", repleCnt:3, likeCnt:1, isILike:true,  postDate:"2021-03-01", postToken:"TOKEN24"}];
-            var menuItems = [{label:"수정하기", value:"UPDATE"}, {label:"삭제하기", value:"DELETE"}];
+    render() {
+        console.log("in render = " + JSON.stringify(this.state.data));
+        return (
+            this.state.data.map(localPost => {
+                localPost.menuItems = (localPost.regMemberId != GLOBAL.MEMBERID ? ["수정하기", "삭제하기"] : ["신고하기"]);
 
-            return chatList.map(chat => {
                 return (
-                    <View key={chat.chatId} style={{height:98, paddingTop:10, paddingLeft:10, borderBottomWidth:0.5, borderBottomColor:"#e0e0e0", backgroundColor:"#ffffff"}}>
-                        <View style={{flex:1, flexDirection:"row", height:24}}>
-                            <Text style={{height:20, width:"50%", color:"#50bcdf", alignItems:"flex-start"}}>{chat.title}</Text>
-                            <DropDownPicker placeholder="zz" items={menuItems} containerStyle={{height:20, width:100, alignItems:"flex-end"}} itemStyle={{height:20, width:100, color:"#303030"}}/>
+                    <View key={localPost.localPostId} style={{height:140, paddingTop:10, paddingLeft:10, borderBottomWidth:0.5, borderBottomColor:"#e0e0e0", backgroundColor:"#ffffff"}}>
+                        <View style={{flexDirection:"row", justifyContent:"space-between", height:40}}>
+                            <Text style={{height:20, width:"50%", color:"#50bcdf", fontWeight:"700", fontSize:15}}>{localPost.title}</Text>
+                            <ModalDropDown options={localPost.menuItems} defaultValue={localPost.regDate} textStyle={{textAlign:"right", fontWeight:"600", color:"#808080", fontSize:13}} style={{marginRight:11, height:20, width:70}} dropdownTextStyle={{textAlign:"right", fontWeight:"600", color:"#808080", fontSize:13}} dropdownStyle={{width:80, height:"auto"}}></ModalDropDown>
                         </View>
-                        <Text style={{height:50, color:"#303030", fontSize:12}}>{chat.contents}</Text>
-                        <View style={{flex:1, flexDirection:"row", height:20}}>
-                            <Icon name="ios-remove-circle-outline" stlye={{height:20, width:"10%", alignItems:"flex-start"}}></Icon>
-                            <Text style={{height:20, width:"5%"}}>{chat.likeCnt}</Text>
-                            <Icon name="ios-thumbs-up-outline" stlye={{height:20, width:"60%"}}></Icon>
-                            <Text style={{height:20, width:"5%"}}>{chat.repleCnt}</Text>
-                            <Text style={{height:20, width:"30%", color:"#303030", fontSize:12, alignItems:"flex-end"}}>{chat.memberNm + " 🥰"}</Text>
+                        <Text style={{height:65, color:"#2e2e2e", fontSize:14}}>{localPost.contents}</Text>
+                        <View style={{flexDirection:"row", justifyContent:"space-between", height:20}}>
+                            <View style={{flexDirection:"row", height:20, width:"50%", alignItems:"center"}}>
+                                <Icon name="chatbox-ellipses" size={12} color="#808080" style={{marginTop:2}}></Icon>
+                                <Text style={{width:35, fontSize:14, color:"#808080"}}>{localPost.likeCnt}</Text>
+                                <Icon name="thumbs-up" size={12} color="#808080"></Icon>
+                                <Text style={{width:35, fontSize:14, color:"#808080"}}>{localPost.commentCnt}</Text>
+                            </View>
+                            <Text style={{width:"50%", color:"#808080", fontSize:13, fontWeight:"600", textAlign:"right", paddingRight:15}}>{localPost.regMemberNm}</Text>
                         </View>
                     </View>
                 )
-            })
-        }
-
-        return(
-            <View>
+            }) 
+        )
+    }
+}
+ 
+export default class SudaTabHome extends Component {
+    render() {
+        return (
+            <ScrollView>
                 <Text style={{fontSize:16, height:50, textAlignVertical:"center", textAlign:"center", fontWeight:"600", padding:10, borderBottomWidth:0.5, borderBottomColor:"#e0e0e0"}}>공덕동 수다방</Text>
-                <ChatLists></ChatLists>
-            </View>
+                <PostList></PostList>
+            </ScrollView>
         );
     }
 }
