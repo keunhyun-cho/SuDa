@@ -15,11 +15,12 @@ class PostList extends Component {
         data:[]
     };
 
-    getData = async () => {
-        let data = await axios.get("http://3.35.202.156/api/localPost", {headers:{"X-AUTH-TOKEN":GLOBAL.TOKEN}, data:{}})
-        
-        this.setState({data:data.data.data.localPosts});
-        console.log("in getData = " + JSON.stringify(this.state.data));
+    getData() {
+        axios.get("http://3.35.202.156/api/localPost", {headers:{"X-AUTH-TOKEN":GLOBAL.TOKEN}, data:{}})
+        .then(({data}) => {
+            this.setState({data:data.data.localPosts});
+            console.log("in getData = " + JSON.stringify(this.state.data));
+        })
     }
 
     componentDidMount() {
@@ -36,10 +37,9 @@ class PostList extends Component {
     }
 
     render() {
-        console.log("in render = " + JSON.stringify(this.state.data));
         return (
             this.state.data.map(localPost => {
-                localPost.menuItems = (localPost.regMemberId != GLOBAL.MEMBERID ? ["수정하기", "삭제하기"] : ["신고하기"]);
+                localPost.menuItems = (localPost.regMemberId == GLOBAL.MEMBERID ? ["수정하기", "삭제하기"] : ["신고하기"]);
 
                 return (
                     <View key={localPost.localPostId} style={{height:140, paddingTop:10, paddingLeft:10, borderBottomWidth:0.5, borderBottomColor:"#e0e0e0", backgroundColor:"#ffffff"}}>
