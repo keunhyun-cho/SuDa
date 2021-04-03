@@ -40,7 +40,7 @@ class PostList extends Component {
     controlLocalPost(value, localPost) {
         switch(value) {
             case "수정하기":
-                console.log("수정 API 연동 예정");
+                console.log("수정 API 연동 예정 & 상세조회, 수정 화면 문의 필요"); 
                 break;
 
             case "삭제하기":
