@@ -25,7 +25,7 @@ export default class SudaTabAlert extends Component {
                         console.log("localPostData ===> " + JSON.stringify(data));
 
                         if(data.resultCode == "00")
-                            navigation.navigate("SudaMainPage");
+                            navigation.goBack();
                     })
                 }}></Button>
                 <TextInput style={{color:"#686868", fontSize:19, height:50, borderBottomColor:"#50bcda", borderBottomWidth:0.5}} placeholder="제목을 입력하세요" maxLength={30} value={this.state.title} onChangeText={(text) => {
