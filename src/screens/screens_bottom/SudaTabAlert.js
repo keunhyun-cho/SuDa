@@ -34,10 +34,12 @@ export default class SudaTabAlert extends Component {
 
 
         return(
-            <ScrollView>
-                <Text style={{fontSize:16, height:50, textAlignVertical:"center", textAlign:"center", fontWeight:"600", padding:10, borderBottomWidth:0.5, borderBottomColor:"#e0e0e0"}}>알림</Text>
-                <AlertLists/>
-            </ScrollView>
+            <View>
+            <Text  style={{fontSize:16, height:50, textAlignVertical:"center", textAlign:"center", fontWeight:"600", padding:10, borderBottomWidth:0.5, borderBottomColor:"#e0e0e0"}}>알림</Text>
+                <ScrollView>                
+                    <AlertLists/>
+                </ScrollView>
+            </View>
         );
     }
 }

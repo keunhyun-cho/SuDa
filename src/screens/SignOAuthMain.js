@@ -3,6 +3,7 @@ import {StyleSheet, View, Text, Image, Modal, TouchableHighlight} from 'react-na
 import axios from 'axios';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import global from './Global.js';
 
 class SignOAuthMain extends React.Component {
 
@@ -60,7 +61,7 @@ class SignOAuthMain extends React.Component {
                                     alignSelf:'flex-start',
                                     color:'#00a4ff'
                                     }}
-                            >{DongSuId +' 님'}  </Text>
+                            >{global.MEMBERNM} </Text>
                             <Text
                                  style={{ fontSize: 18, 
                                     marginLeft : 10,
