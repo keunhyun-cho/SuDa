@@ -27,15 +27,19 @@ class PostList extends Component {
     componentDidMount() {
         console.log("in componentDidMount");
         this.getData();
+
+        // this.props.navigation.addListener("willFocus", () => {
+        //     console.log("in willfocus")
+        // })
     }
 
     componentDidUpdate() {
         console.log("in componentDidUpdate");
     }
  
-    componentWillUnmount() {
-        console.log("in componentWillUnmount");
-    }
+    // componentWillUnmount() {
+    //     console.log("in componentWillUnmount");
+    // }
 
     controlLocalPost(value, localPost) {
         switch(value) {
@@ -51,7 +55,7 @@ class PostList extends Component {
                 Mailer.mail({
                     subject: "동수다에 게시글 신고 드립니다.",
                     recipients: ["dongsudasuda@gmail.com"],
-                    ccRecipients: ["shoneyou@hanmail.net"],
+                    ccRecipients: [""],
                     body: "안녕하세요.<br>언제나 더 나은 동수다를 위해 노력해 주셔서 감사합니다.<br><br>" +
                           "아래 신고 가이드 라인을 안내드리니 확인 후 최종 신고 부탁 드립니다.<br><br>" +
                           "[신고 기준]<br>욕설/비하<br>개인 사생활 침해<br>음란성<br>게시글/댓글 도배<br>직접적 홍보<br><br>" +
@@ -86,13 +90,13 @@ class PostList extends Component {
                 localPost.menuItems = (localPost.regMemberId == GLOBAL.MEMBERID ? ["수정하기", "삭제하기"] : ["신고하기"]);
 
                 return (
-                    <View key={localPost.localPostId} style={{height:140, paddingTop:10, paddingLeft:10, borderBottomWidth:0.5, borderBottomColor:"#e0e0e0", backgroundColor:"#ffffff"}}>
-                        <View style={{flexDirection:"row", justifyContent:"space-between", height:40}}>
+                    <View key={localPost.localPostId} style={{height:130, paddingTop:10, paddingLeft:10, borderBottomWidth:0.5, borderBottomColor:"#e0e0e0", backgroundColor:"#ffffff"}}>
+                        <View style={{flexDirection:"row", justifyContent:"space-between", height:35}}>
                             <Text style={{height:20, width:"50%", color:"#50bcdf", fontWeight:"700", fontSize:15}}>{localPost.title}</Text>
-                            <ModalDropDown onSelect={(idx, value) => {this.controlLocalPost(value, localPost);}} options={localPost.menuItems} defaultValue={localPost.regDate} textStyle={{textAlign:"right", fontWeight:"600", color:"#808080", fontSize:13}} style={{marginRight:11, height:20, width:70}} dropdownTextStyle={{textAlign:"right", fontWeight:"600", color:"#808080", fontSize:13}} dropdownStyle={{width:80, height:"auto"}}></ModalDropDown>
+                            <ModalDropDown onSelect={(idx, value) => {this.controlLocalPost(value, localPost);}} options={localPost.menuItems} defaultValue={localPost.regDate.substring(0, 10)} textStyle={{textAlign:"right", fontWeight:"600", color:"#808080", fontSize:13}} style={{marginRight:11, height:20, width:70}} dropdownTextStyle={{textAlign:"right", fontWeight:"600", color:"#808080", fontSize:13}} dropdownStyle={{width:80, height:"auto"}}></ModalDropDown>
                         </View>
-                        <Text style={{height:65, color:"#2e2e2e", fontSize:14}}>{localPost.contents}</Text>
-                        <View style={{flexDirection:"row", justifyContent:"space-between", height:20}}>
+                        <Text style={{height:60, color:"#2e2e2e", fontSize:14}}>{localPost.contents}</Text>
+                        <View style={{flexDirection:"row", justifyContent:"space-between", height:25}}>
                             <View style={{flexDirection:"row", height:20, width:"50%", alignItems:"center"}}>
                                 <Icon name="chatbox-ellipses" size={12} color="#808080" style={{marginTop:2}}></Icon>
                                 <Text style={{width:35, fontSize:14, color:"#808080"}}>{localPost.likeCnt}</Text>
@@ -112,10 +116,12 @@ export default class SudaTabHome extends Component {
     render() {
         const { navigation } = this.props;
         return (
-            <ScrollView>
+            <View>
                 <Text style={{fontSize:16, height:50, textAlignVertical:"center", textAlign:"center", fontWeight:"600", padding:10, borderBottomWidth:0.5, borderBottomColor:"#e0e0e0"}}>공덕동 수다방</Text>
-                <PostList></PostList>
-            </ScrollView>
+                <ScrollView>
+                    <PostList></PostList>
+                </ScrollView>
+            </View>
         );
     }
 }
