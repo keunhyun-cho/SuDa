@@ -63,6 +63,9 @@ class SignOAuth extends Component {
           loginData = data;
 
           if(loginData.resultCode == '00'){
+            GLOBAL.MEMBERNM = signUpData.data.memberNm;
+            console.log('GLOBAL.MEMBERNM ===> ' + GLOBAL.MEMBERNM);
+
             GLOBAL.MEMBERID = signUpData.data.memberId;
             console.log('GLOBAL.MEMBERID ===> ' + GLOBAL.MEMBERID);
 
