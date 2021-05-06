@@ -1,21 +1,18 @@
 import Icon from 'react-native-vector-icons/Ionicons';
 import React, {Component} from "react";
-import {View, Text, ScrollView, Alert} from "react-native";
+import {View, Text, ScrollView, Alert, TouchableOpacity} from "react-native";
 import ModalDropDown from "react-native-modal-dropdown";
 import GLOBAL from "../Global.js";
 import axios from "axios";
 import Mailer from 'react-native-mail';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 class PostList extends Component {
     constructor(props) {
-        super(props);
         console.log("in constructor");
+        
+        super(props);
+        this.state = {localPosts:[]};
     }
-
-    state = {
-        localPosts:[]
-    };
 
     getData() {
         axios.get("http://3.35.202.156/api/localPost", {headers:{"X-AUTH-TOKEN":GLOBAL.TOKEN}, data:{}})
@@ -28,10 +25,6 @@ class PostList extends Component {
     componentDidMount() {
         console.log("in componentDidMount");
         this.getData();
-
-        // this.props.navigation.addListener("willFocus", () => {
-        //     console.log("in willfocus")
-        // })
     }
 
     componentDidUpdate() {
@@ -86,14 +79,12 @@ class PostList extends Component {
     }
 
     render() {
-        const { navigation } = this.props;
-
         return (
             this.state.localPosts.map(localPost => {
                 localPost.menuItems = (localPost.regMemberId == GLOBAL.MEMBERID ? ["수정하기", "삭제하기"] : ["신고하기"]);
-
+                
                 return (
-                    <TouchableOpacity onPress={() => navigation.navigate('SudaDetailChatPage')} key={localPost.localPostId} style={{height:130, paddingTop:10, paddingLeft:10, borderBottomWidth:0.5, borderBottomColor:"#e0e0e0", backgroundColor:"#ffffff"}}>
+                    <TouchableOpacity onPress={() => {console.log("this.props.test = " + JSON.stringify(this.props.test));   this.props.test.navigation.navigate("SudaDetailChatPage");}} key={localPost.localPostId} style={{height:130, paddingTop:10, paddingLeft:10, borderBottomWidth:0.5, borderBottomColor:"#e0e0e0", backgroundColor:"#ffffff"}}>
                         <View style={{flexDirection:"row", justifyContent:"space-between", height:35}}>
                             <Text style={{height:20, width:"50%", color:"#50bcdf", fontWeight:"700", fontSize:15}}>{localPost.title}</Text>
                             <ModalDropDown onSelect={(idx, value) => {this.controlLocalPost(value, localPost);}} options={localPost.menuItems} defaultValue={localPost.regDate.substring(0, 10)} textStyle={{textAlign:"right", fontWeight:"600", color:"#808080", fontSize:13}} style={{marginRight:11, height:20, width:70}} dropdownTextStyle={{textAlign:"right", fontWeight:"600", color:"#808080", fontSize:13}} dropdownStyle={{width:80, height:"auto"}}></ModalDropDown>
@@ -114,17 +105,19 @@ class PostList extends Component {
         )
     }
 }
- 
-export default class SudaTabHome extends Component {
+
+class SudaTabHome extends Component {
     render() {
-        const { navigation } = this.props;
+        const {navigation} = this.props; // App에서 createStackNavigation에 등록한 페이지는 자동적으로 props로 navigation을 받아올 수 있음
         return (
             <View>
                 <Text style={{fontSize:16, height:50, textAlignVertical:"center", textAlign:"center", fontWeight:"600", padding:10, borderBottomWidth:0.5, borderBottomColor:"#e0e0e0"}}>공덕동 수다방</Text>
                 <ScrollView>
-                    <PostList></PostList>
+                    <PostList test={{navigation}}/>
                 </ScrollView>
             </View>
         );
     }
 }
+ 
+export default SudaTabHome;
