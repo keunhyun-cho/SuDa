@@ -5,6 +5,7 @@ import ModalDropDown from "react-native-modal-dropdown";
 import GLOBAL from "../Global.js";
 import axios from "axios";
 import Mailer from 'react-native-mail';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 class PostList extends Component {
     constructor(props) {
@@ -85,12 +86,14 @@ class PostList extends Component {
     }
 
     render() {
+        const { navigation } = this.props;
+
         return (
             this.state.localPosts.map(localPost => {
                 localPost.menuItems = (localPost.regMemberId == GLOBAL.MEMBERID ? ["수정하기", "삭제하기"] : ["신고하기"]);
 
                 return (
-                    <View key={localPost.localPostId} style={{height:130, paddingTop:10, paddingLeft:10, borderBottomWidth:0.5, borderBottomColor:"#e0e0e0", backgroundColor:"#ffffff"}}>
+                    <TouchableOpacity onPress={() => navigation.navigate('SudaDetailChatPage')} key={localPost.localPostId} style={{height:130, paddingTop:10, paddingLeft:10, borderBottomWidth:0.5, borderBottomColor:"#e0e0e0", backgroundColor:"#ffffff"}}>
                         <View style={{flexDirection:"row", justifyContent:"space-between", height:35}}>
                             <Text style={{height:20, width:"50%", color:"#50bcdf", fontWeight:"700", fontSize:15}}>{localPost.title}</Text>
                             <ModalDropDown onSelect={(idx, value) => {this.controlLocalPost(value, localPost);}} options={localPost.menuItems} defaultValue={localPost.regDate.substring(0, 10)} textStyle={{textAlign:"right", fontWeight:"600", color:"#808080", fontSize:13}} style={{marginRight:11, height:20, width:70}} dropdownTextStyle={{textAlign:"right", fontWeight:"600", color:"#808080", fontSize:13}} dropdownStyle={{width:80, height:"auto"}}></ModalDropDown>
@@ -105,7 +108,7 @@ class PostList extends Component {
                             </View>
                             <Text style={{width:"50%", color:"#808080", fontSize:13, fontWeight:"600", textAlign:"right", paddingRight:15}}>{localPost.regMemberNm}</Text>
                         </View>
-                    </View>
+                    </TouchableOpacity>
                 )
             }) 
         )
