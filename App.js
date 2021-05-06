@@ -22,9 +22,9 @@ const Stack = createStackNavigator();
 
 const App: () => React$Node = () => {
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="StartPage">
-        <Stack.Screen name="StartPage" component={StartPage} />
+    <NavigationContainer >
+      <Stack.Navigator initialRouteName="StartPage" screenOptions={{headerShown: false}} >
+        <Stack.Screen name="StartPage" component={StartPage}/>
         <Stack.Screen name="SignPage" component={SignPage} />
         <Stack.Screen name="SignOAuthPage" component={SignOAuthPage} />
         <Stack.Screen name="SignOAuthMainPage" component={SignOAuthMainPage} />
