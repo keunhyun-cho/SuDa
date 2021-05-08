@@ -8,8 +8,8 @@ import Mailer from 'react-native-mail';
 
 class PostList extends Component {
     constructor(props) {
-        console.log("in constructor");
-        
+        console.log("PostList constructor");
+
         super(props);
         this.state = {localPosts:[]};
     }
@@ -18,21 +18,22 @@ class PostList extends Component {
         axios.get("http://3.35.202.156/api/localPost", {headers:{"X-AUTH-TOKEN":GLOBAL.TOKEN}, data:{}})
         .then(({data}) => {
             this.setState({localPosts:data.data.localPosts});
-            console.log("in getData = " + JSON.stringify(this.state.localPosts));
+            console.log("PostList getData");
+            console.log(JSON.stringify(this.state.localPosts));
         })
     }
 
     componentDidMount() {
-        console.log("in componentDidMount");
+        console.log("PostList componentDidMount");
         this.getData();
     }
 
     componentDidUpdate() {
-        console.log("in componentDidUpdate");
+        console.log("PostList componentDidUpdate");
     }
  
     // componentWillUnmount() {
-    //     console.log("in componentWillUnmount");
+    //     console.log("PostList componentWillUnmount");
     // }
 
     controlLocalPost(value, localPost) {
@@ -84,18 +85,18 @@ class PostList extends Component {
                 localPost.menuItems = (localPost.regMemberId == GLOBAL.MEMBERID ? ["수정하기", "삭제하기"] : ["신고하기"]);
                 
                 return (
-                    <TouchableOpacity onPress={() => {console.log("this.props.test = " + JSON.stringify(this.props.test));   this.props.test.navigation.navigate("SudaDetailChatPage");}} key={localPost.localPostId} style={{height:130, paddingTop:10, paddingLeft:10, borderBottomWidth:0.5, borderBottomColor:"#e0e0e0", backgroundColor:"#ffffff"}}>
+                    <TouchableOpacity onPress={() => {this.props.navigation.navigate("SudaDetailChatPage", {postId:localPost.localPostId})}} key={localPost.localPostId} style={{height:120, paddingTop:10, paddingLeft:10, borderBottomWidth:0.5, borderBottomColor:"#e0e0e0", backgroundColor:"#ffffff"}}>
                         <View style={{flexDirection:"row", justifyContent:"space-between", height:35}}>
                             <Text style={{height:20, width:"50%", color:"#50bcdf", fontWeight:"700", fontSize:15}}>{localPost.title}</Text>
                             <ModalDropDown onSelect={(idx, value) => {this.controlLocalPost(value, localPost);}} options={localPost.menuItems} defaultValue={localPost.regDate.substring(0, 10)} textStyle={{textAlign:"right", fontWeight:"600", color:"#808080", fontSize:13}} style={{marginRight:11, height:20, width:70}} dropdownTextStyle={{textAlign:"right", fontWeight:"600", color:"#808080", fontSize:13}} dropdownStyle={{width:80, height:"auto"}}></ModalDropDown>
                         </View>
-                        <Text style={{height:60, color:"#2e2e2e", fontSize:14}}>{localPost.contents}</Text>
+                        <Text style={{height:50, color:"#2e2e2e", fontSize:14}}>{localPost.contents}</Text>
                         <View style={{flexDirection:"row", justifyContent:"space-between", height:25}}>
                             <View style={{flexDirection:"row", height:20, width:"50%", alignItems:"center"}}>
                                 <Icon name="chatbox-ellipses" size={12} color="#808080" style={{marginTop:2}}></Icon>
                                 <Text style={{width:35, fontSize:14, color:"#808080"}}>{localPost.likeCnt}</Text>
-                                <Icon name="thumbs-up" size={12} color="#808080"></Icon>
-                                <Text style={{width:35, fontSize:14, color:"#808080"}}>{localPost.commentCnt}</Text>
+                                <Icon name="thumbs-up" size={12} color={localPost.likeYn ? "#50bcdf" : "#808080"}></Icon>
+                                <Text style={{width:35, fontSize:14, color:(localPost.likeYn ? "#50bcdf" : "#808080")}}>{localPost.commentCnt}</Text>
                             </View>
                             <Text style={{width:"50%", color:"#808080", fontSize:13, fontWeight:"600", textAlign:"right", paddingRight:15}}>{localPost.regMemberNm}</Text>
                         </View>
@@ -108,16 +109,18 @@ class PostList extends Component {
 
 class SudaTabHome extends Component {
     render() {
-        const {navigation} = this.props; // App에서 createStackNavigation에 등록한 페이지는 자동적으로 props로 navigation을 받아올 수 있음
+        console.log("******* SudaTabHome (navigation not working) *******");
+        console.log(this.props);
+
         return (
             <View>
                 <Text style={{fontSize:16, height:50, textAlignVertical:"center", textAlign:"center", fontWeight:"600", padding:10, borderBottomWidth:0.5, borderBottomColor:"#e0e0e0"}}>공덕동 수다방</Text>
                 <ScrollView>
-                    <PostList test={{navigation}}/>
+                    <PostList navigation={this.props.navigation}/>
                 </ScrollView>
             </View>
         );
     }
 }
- 
+
 export default SudaTabHome;

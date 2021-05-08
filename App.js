@@ -15,6 +15,7 @@ import SignOAuthPage from './src/screens/SignOAuth';
 import SignOAuthMainPage from './src/screens/SignOAuthMain';
 import SudaMainPage  from './src/screens/SudaMain';
 import SudaAddChatPage  from './src/screens/SudaAddChat';
+import SudaTabHomePage  from './src/screens/screens_bottom/SudaTabHome';
 import SudaDetailChatPage  from './src/screens/SudaDetailChat';
 
 
@@ -30,6 +31,7 @@ const App: () => React$Node = () => {
         <Stack.Screen name="SignOAuthMainPage" component={SignOAuthMainPage} />
         <Stack.Screen name="SudaMainPage" component={SudaMainPage} />
         <Stack.Screen name="SudaAddChatPage" component={SudaAddChatPage} />
+        <Stack.Screen name="SudaTabHomePage" component={SudaTabHomePage} />
         <Stack.Screen name="SudaDetailChatPage" component={SudaDetailChatPage} />
       </Stack.Navigator>
     </NavigationContainer>
