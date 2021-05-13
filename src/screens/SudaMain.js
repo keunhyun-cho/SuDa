@@ -27,10 +27,7 @@ const bottomNav = createBottomTabNavigator(
         "SetTab" : {screen:SudaTabSet, navigationOptions: {
             tabBarIcon: ({ focused, tintColor }) => <Icon name='ios-settings' size={20} style={{ color: tintColor }} />
           }},
-        "DetailTab" : {screen:SudaDetailChat, navigationOptions: {
-          tabBarVisible:"false"
-          // tabBarIcon: ({ focused, tintColor }) => <Icon name='ios-settings' size={20} style={{ color: tintColor }} />
-        }},
+        "DetailTab" : {screen:SudaDetailChat}
     }, {
         // animationEnabled: true,
         // swipeEnabled: true,
