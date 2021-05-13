@@ -117,7 +117,7 @@ class SudaTabHome extends Component {
             <View>
                 <Text style={{fontSize:16, height:50, textAlignVertical:"center", textAlign:"center", fontWeight:"600", padding:10, borderBottomWidth:0.5, borderBottomColor:"#e0e0e0"}}>공덕동 수다방</Text>
                 <ScrollView>
-                    <PostList />
+                    <PostList navigation={this.props.navigation}/>
                 </ScrollView>
             </View>
         );
