@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {View, TextInput, Text, Button} from "react-native";
+import {View, TextInput, Text, Button, ScrollView} from "react-native";
 import axios from "axios";
 import GLOBAL from "./Global.js";
 

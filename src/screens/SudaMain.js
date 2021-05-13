@@ -5,6 +5,7 @@ import SudaTabAlert from './screens_bottom/SudaTabAlert';
 import SudaTabHome from './screens_bottom/SudaTabHome';
 import SudaTabInfo from './screens_bottom/SudaTabInfo';
 import SudaTabSet from './screens_bottom/SudaTabSet';
+import SudaDetailChat from './SudaDetailChat';
 import { createAppContainer } from 'react-navigation';
 import ActionButton from 'react-native-action-button';
 // import { Icon } from 'native-base'; 
@@ -14,7 +15,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 // BottomTabNavigator생성
 const bottomNav = createBottomTabNavigator(
     {
-        "Home Tab": {screen:SudaTabHome, navigationOptions: {
+        "HomeTab": {screen:SudaTabHome, navigationOptions: {
             tabBarIcon: ({ focused, tintColor }) => <Icon name='ios-home' size={20} style={{ color: tintColor }}/>
           }}, 
         "AlertTab": {screen:SudaTabAlert, navigationOptions: {
@@ -25,7 +26,10 @@ const bottomNav = createBottomTabNavigator(
           }},
         "SetTab" : {screen:SudaTabSet, navigationOptions: {
             tabBarIcon: ({ focused, tintColor }) => <Icon name='ios-settings' size={20} style={{ color: tintColor }} />
-          }}
+          }},
+          "DetailTab" : {screen:SudaDetailChat, navigationOptions: {
+            tabBarIcon: ({ focused, tintColor }) => <Icon name='ios-settings' size={20} style={{ color: tintColor }} />
+          }},
     }, {
         // animationEnabled: true,
         // swipeEnabled: true,
