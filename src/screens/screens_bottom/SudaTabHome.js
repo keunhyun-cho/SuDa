@@ -7,21 +7,11 @@ import axios from "axios";
 import Mailer from "react-native-mail";
 
 class PostList extends Component {
-    state = {localPosts:[]};
-
     constructor(props) {
         console.log("PostList constructor");
 
         super(props);
-    }
-
-    getData() {
-        axios.get("http://3.35.202.156/api/localPost", {headers:{"X-AUTH-TOKEN":GLOBAL.TOKEN}, data:{}})
-        .then(({data}) => {
-            this.setState({localPosts:data.data.list});
-            console.log("PostList getData");
-            console.log(JSON.stringify(this.state.localPosts));
-        })
+        this.state = {localPosts:[]};
     }
 
     componentDidMount() {
@@ -36,6 +26,15 @@ class PostList extends Component {
     // componentWillUnmount() {
     //     console.log("PostList componentWillUnmount");
     // }
+
+    getData() {
+        axios.get("http://3.35.202.156/api/localPost", {headers:{"X-AUTH-TOKEN":GLOBAL.TOKEN}, data:{}})
+        .then(({data}) => {
+            this.setState({localPosts:data.data.list});
+            console.log("PostList getData");
+            console.log(JSON.stringify(this.state.localPosts));
+        })
+    }
 
     controlLocalPost(value, localPost) {
         switch(value) {
@@ -95,9 +94,9 @@ class PostList extends Component {
                         <View style={{flexDirection:"row", justifyContent:"space-between", height:25}}>
                             <View style={{flexDirection:"row", height:20, width:"50%", alignItems:"center"}}>
                                 <Icon name="chatbox-ellipses" size={12} color="#808080" style={{marginTop:2}}></Icon>
-                                <Text style={{width:35, fontSize:14, color:"#808080"}}>{localPost.likeCnt}</Text>
+                                <Text style={{width:35, fontSize:14, color:"#808080", marginLeft:4}}>{localPost.likeCnt}</Text>
                                 <Icon name="thumbs-up" size={12} color={localPost.likeYn ? "#50bcdf" : "#808080"}></Icon>
-                                <Text style={{width:35, fontSize:14, color:(localPost.likeYn ? "#50bcdf" : "#808080")}}>{localPost.commentCnt}</Text>
+                                <Text style={{width:35, fontSize:14, color:(localPost.likeYn ? "#50bcdf" : "#808080"), marginLeft:4}}>{localPost.commentCnt}</Text>
                             </View>
                             <Text style={{width:"50%", color:"#808080", fontSize:13, fontWeight:"600", textAlign:"right", paddingRight:15}}>{localPost.regMemberNm}</Text>
                         </View>
@@ -110,12 +109,9 @@ class PostList extends Component {
 
 class SudaTabHome extends Component {
     render() {
-        console.log("******* SudaTabHome (navigation not working) *******");
-        console.log(this.props);
-
         return (
             <View>
-                <Text style={{fontSize:16, height:50, textAlignVertical:"center", textAlign:"center", fontWeight:"600", padding:10, borderBottomWidth:0.5, borderBottomColor:"#e0e0e0"}}>공덕동 수다방</Text>
+                <Text style={{fontSize:16, height:50, textAlignVertical:"center", textAlign:"center", fontWeight:"700", padding:10, borderBottomWidth:0.5, borderBottomColor:"#e0e0e0", backgroundColor:"#ffffff"}}>공덕동 수다방</Text>
                 <ScrollView>
                     <PostList navigation={this.props.navigation}/>
                 </ScrollView>
