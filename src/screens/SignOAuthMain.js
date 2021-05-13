@@ -123,7 +123,7 @@ class SignOAuthMain extends React.Component {
                         this.setModalVisible(true);
                     }}
                     >
-                    <Text >Show Modal</Text>
+                    <Text></Text>
                 </TouchableHighlight>
             </View>
         );

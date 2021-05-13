@@ -27,9 +27,9 @@ const bottomNav = createBottomTabNavigator(
         "SetTab" : {screen:SudaTabSet, navigationOptions: {
             tabBarIcon: ({ focused, tintColor }) => <Icon name='ios-settings' size={20} style={{ color: tintColor }} />
           }},
-          "DetailTab" : {screen:SudaDetailChat, navigationOptions: {
-            tabBarIcon: ({ focused, tintColor }) => <Icon name='ios-settings' size={20} style={{ color: tintColor }} />
-          }},
+        "DetailTab" : {screen:SudaDetailChat, navigationOptions: {
+          tabBarIcon: ({ focused, tintColor }) => <Icon name='ios-settings' size={20} style={{ color: tintColor }} />
+        }},
     }, {
         // animationEnabled: true,
         // swipeEnabled: true,
@@ -63,11 +63,7 @@ const AppContainer = createAppContainer(bottomNav);
  
 export default class SudaMain extends Component{
     render() {
-        console.log("******* SudaMain (navigation working) *******");
-        console.log(this.props);
-
         return (
-            
             <View style={{flex:1}}>
                 <AppContainer/>
                 <ActionButton style={{marginBottom:30}} buttonColor="#50bcdf" onPress={() => this.props.navigation.navigate("SudaAddChatPage")} />
