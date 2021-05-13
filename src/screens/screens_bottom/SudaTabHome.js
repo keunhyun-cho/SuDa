@@ -4,20 +4,21 @@ import {View, Text, ScrollView, Alert, TouchableOpacity} from "react-native";
 import ModalDropDown from "react-native-modal-dropdown";
 import GLOBAL from "../Global.js";
 import axios from "axios";
-import Mailer from 'react-native-mail';
+import Mailer from "react-native-mail";
 
 class PostList extends Component {
+    state = {localPosts:[]};
+
     constructor(props) {
         console.log("PostList constructor");
 
         super(props);
-        this.state = {localPosts:[]};
     }
 
     getData() {
         axios.get("http://3.35.202.156/api/localPost", {headers:{"X-AUTH-TOKEN":GLOBAL.TOKEN}, data:{}})
         .then(({data}) => {
-            this.setState({localPosts:data.data.localPosts});
+            this.setState({localPosts:data.data.list});
             console.log("PostList getData");
             console.log(JSON.stringify(this.state.localPosts));
         })
@@ -116,7 +117,7 @@ class SudaTabHome extends Component {
             <View>
                 <Text style={{fontSize:16, height:50, textAlignVertical:"center", textAlign:"center", fontWeight:"600", padding:10, borderBottomWidth:0.5, borderBottomColor:"#e0e0e0"}}>공덕동 수다방</Text>
                 <ScrollView>
-                    <PostList navigation={this.props.navigation}/>
+                    <PostList />
                 </ScrollView>
             </View>
         );
