@@ -12,7 +12,7 @@ class PostList extends Component {
         console.log("PostList constructor");
 
         super(props);
-        this.state = {localPosts:[], localPostLikeColor:""};
+        this.state = {localPosts:[]};
     }
 
     componentDidMount() {
@@ -43,11 +43,11 @@ class PostList extends Component {
     controlLocalPost(value, localPost) {
         switch(value) {
             case "수정하기":
-                Alert.alert("", "수정 API 연동 예정"); 
+                this.props.navigation.navigate("SudaUpdateChatTab", localPost);
                 break;
 
             case "삭제하기":
-                Alert.alert("", "정말 삭제하시겠습니까?", [{text:"예", onPress:() => Alert.alert("", "삭제 API 연동 예정") }, {text:"아니오"}]);
+                Alert.alert("", "정말 삭제하시겠습니까?", [{text:"예", onPress:() => Alert.alert("", "게시글 삭제 API 연동 예정") }, {text:"아니오"}]);
                 break;
 
             case "신고하기":
@@ -69,7 +69,7 @@ class PostList extends Component {
     }
 
     goToDetailChat(localPost) {
-        this.props.navigation.navigate("SudaDetailChatTab", {postId:localPost.localPostId});
+        this.props.navigation.navigate("SudaDetailChatTab", {localPostId:localPost.localPostId});
     }
 
     likeLocalPostOrNot(localPost) {
@@ -99,9 +99,13 @@ class PostList extends Component {
                         <View style={{flexDirection:"row", justifyContent:"space-between", height:25}}>
                             <View style={{flexDirection:"row", height:20, width:"50%", alignItems:"center"}}>
                                 <Icon onPress={() => {this.goToDetailChat(localPost);}} name="chatbox-ellipses" size={12} color="#808080" style={{marginTop:2}}></Icon>
-                                <Text style={{width:35, fontSize:14, color:"#808080", marginLeft:4}}>{localPost.commentCnt}</Text>
+                                <TouchableOpacity onPress={() => {this.goToDetailChat(localPost);}} >
+                                    <Text style={{width:35, fontSize:14, color:"#808080", marginLeft:4}}>{localPost.commentCnt}</Text>
+                                </TouchableOpacity>
                                 <Icon onPress={() => {this.likeLocalPostOrNot(localPost);}} name="thumbs-up" size={12} color={localPost.likeYn ? "#50bcdf" : "#808080"}></Icon>
-                                <Text style={{width:35, fontSize:14, color:(localPost.likeYn ? "#50bcdf" : "#808080"), marginLeft:4}}>{localPost.likeCnt}</Text>
+                                <TouchableOpacity onPress={() => {this.likeLocalPostOrNot(localPost);}} >
+                                    <Text style={{width:35, fontSize:14, color:(localPost.likeYn ? "#50bcdf" : "#808080"), marginLeft:4}}>{localPost.likeCnt}</Text>
+                                </TouchableOpacity>
                             </View>
                             <Text style={{width:"50%", color:"#808080", fontSize:13, fontWeight:"600", textAlign:"right", paddingRight:15}}>{localPost.regMemberNm}</Text>
                         </View>

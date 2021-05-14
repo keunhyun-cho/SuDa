@@ -24,7 +24,9 @@ class SudaUpdateChat extends Component {
     // }
 
     render() {
-        return;
+        return (
+            <View></View>
+        );
     }
 }
 

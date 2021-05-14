@@ -58,7 +58,7 @@ class SignOAuth extends Component {
         this.props.navigation.navigate("SignOAuthMainPage", {LoginId:GLOBAL.MEMBERNM});
       } 
       else 
-        Alert.alert("서비스 작업중 입니다.", "앱 재 로그인 바랍니다.", [{text:"확인", onPress: () => console.log("OK Press")}], {cancelable:false});
+        Alert.alert("서비스 작업중 입니다.", "앱 재 로그인 바랍니다.", [{text:"확인", onPress:() => console.log("OK Press")}], {cancelable:false});
     });
     return;
 
