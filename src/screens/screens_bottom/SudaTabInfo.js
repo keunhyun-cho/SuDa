@@ -20,7 +20,7 @@ class PostMyList extends Component {
         // console.log("왜 403???? GLOBAL.TOKEN = " + GLOBAL.TOKEN);
         axios.get("http://3.35.202.156/api/localPost", {headers:{"X-AUTH-TOKEN":GLOBAL.TOKEN}, data:{}})
         .then(({data}) => {
-            this.setState({localPosts:data.data.localPosts});
+            this.setState({localPosts:data.data.list});
             console.log("in getData = " + JSON.stringify(this.state.localPosts));
         })
     }
