@@ -49,17 +49,16 @@ class CommentList extends Component {
         })
     }
 
-    controlLocalComment(value, localComment) {
-        switch(value) {
-            case "수정":
-                break;
+    updateLocalComment(localComment) {
+        this.props.navigation.navigate("SudaUpdateChatTab", localComment);
+    }
 
-            case "삭제":
-                break;
+    deleteLocalComment(localComment) {
 
-            case "대댓글 등록":
-                break;
-        }
+    }
+
+    addSubComment(localComment) {
+
     }
 
     render() {
@@ -67,7 +66,11 @@ class CommentList extends Component {
             this.state.localComments.map(localComment => {
                 return (
                     <View key={localComment.commentId ? localComment.commentId : localComment.subCommentId} style={{paddingLeft:localComment.commentId ? 0 : 20, paddingTop:5, paddingBottom:5, borderBottomWidth:0.5, borderBottomColor:localComment.commentId ? "#e0e0e0" : "#ffffff", backgroundColor:localComment.commentId ? "#ffffff" : "#e9e9e9"}}>
-                        <ModalDropDown onSelect={(idx, value) => {this.controlLocalComment(value, localComment);}} options={localComment.regMemberId == GLOBAL.MEMBERID ? ["수정", "삭제", "대댓글 등록"] : ["대댓글 등록"]} defaultValue="…" textStyle={{textAlign:"right", fontWeight:"600", color:"#808080", fontSize:15}} style={{height:20, alignSelf:"flex-end"}} dropdownTextStyle={{textAlign:"right", fontWeight:"600", color:"#808080", fontSize:13}} dropdownStyle={{width:80, height:"auto"}}></ModalDropDown>
+                        <View style={{height:20, flexDirection:"row", alignSelf:"flex-end"}}>
+                            <Icon onPress={() => {this.updateLocalComment(localComment);}} name="chatbox-ellipses" size={14} color="#808080" style={{marginRight:5, display:localComment.commentId && localComment.regMemberId == GLOBAL.MEMBERID ? "flex" : "none"}}></Icon>
+                            <Icon onPress={() => {this.deleteLocalComment(localComment);}} name="trash" size={14} color="#808080" style={{marginRight:5, display:localComment.commentId && localComment.regMemberId == GLOBAL.MEMBERID ? "flex" : "none"}}></Icon>
+                            <Icon onPress={() => {this.addSubComment(localComment);}} name="add-circle" size={14} color="#808080" style={{display:localComment.commentId ? "flex" : "none"}}></Icon>
+                        </View>
                         <Text style={{height:20, fontSize:12, color:"#50bcdf"}}>{localComment.regMemberNm}</Text>
                         <Text style={{height:20, fontSize:12}}>{localComment.commentId ? (localComment.delYn ? "삭제된 댓글입니다." : localComment.content) : localComment.content}</Text>
                         <Text style={{height:20, fontSize:12, color:"#808080"}}>{localComment.regDate}</Text>

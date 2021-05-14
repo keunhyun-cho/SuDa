@@ -15,8 +15,8 @@ import SignOAuthPage from './src/screens/SignOAuth';
 import SignOAuthMainPage from './src/screens/SignOAuthMain';
 import SudaMainPage  from './src/screens/SudaMain';
 import SudaAddChatPage  from './src/screens/SudaAddChat';
-import SudaTabHomePage  from './src/screens/screens_bottom/SudaTabHome';
 import SudaDetailChatPage  from './src/screens/SudaDetailChat';
+import SudaUpdateChatPage  from './src/screens/SudaUpdateChat';
 
 
 const Stack = createStackNavigator();
@@ -24,15 +24,15 @@ const Stack = createStackNavigator();
 const App: () => React$Node = () => {
   return (
     <NavigationContainer >
-      <Stack.Navigator initialRouteName="StartPage" screenOptions={{headerShown: false}} >
+      <Stack.Navigator initialRouteName="StartPage" screenOptions={{headerShown:false}} >
         <Stack.Screen name="StartPage" component={StartPage}/>
         <Stack.Screen name="SignPage" component={SignPage} />
         <Stack.Screen name="SignOAuthPage" component={SignOAuthPage} />
         <Stack.Screen name="SignOAuthMainPage" component={SignOAuthMainPage} />
         <Stack.Screen name="SudaMainPage" component={SudaMainPage} />
         <Stack.Screen name="SudaAddChatPage" component={SudaAddChatPage} />
-        <Stack.Screen name="SudaTabHomePage" component={SudaTabHomePage} />
         <Stack.Screen name="SudaDetailChatPage" component={SudaDetailChatPage} />
+        <Stack.Screen name="SudaUpdateChatPage" component={SudaUpdateChatPage} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -6,28 +6,29 @@ import SudaTabHome from './screens_bottom/SudaTabHome';
 import SudaTabInfo from './screens_bottom/SudaTabInfo';
 import SudaTabSet from './screens_bottom/SudaTabSet';
 import SudaDetailChat from './SudaDetailChat';
+import SudaUpdateChat from './SudaUpdateChat';
 import { createAppContainer } from 'react-navigation';
 import ActionButton from 'react-native-action-button';
-// import { Icon } from 'native-base'; 
 import Icon from 'react-native-vector-icons/Ionicons';
 
 
 // BottomTabNavigator생성
 const bottomNav = createBottomTabNavigator(
     {
-        "HomeTab": {screen:SudaTabHome, navigationOptions: {
+        "SudaTabHomeTab": {screen:SudaTabHome, navigationOptions: {
             tabBarIcon: ({ focused, tintColor }) => <Icon name='ios-home' size={20} style={{ color: tintColor }}/>
           }}, 
-        "AlertTab": {screen:SudaTabAlert, navigationOptions: {
+        "SudaTabAlertTab": {screen:SudaTabAlert, navigationOptions: {
             tabBarIcon: ({ focused, tintColor }) => <Icon name='ios-notifications-sharp' size={20} style={{ color: tintColor }} />
           }},
-        "InfoTab": {screen:SudaTabInfo, navigationOptions: {
+        "SudaTabInfoTab": {screen:SudaTabInfo, navigationOptions: {
             tabBarIcon: ({ focused, tintColor }) => <Icon name='ios-person' size={20} style={{ color: tintColor }} />
           }},
-        "SetTab" : {screen:SudaTabSet, navigationOptions: {
+        "SudaTabSetTab" : {screen:SudaTabSet, navigationOptions: {
             tabBarIcon: ({ focused, tintColor }) => <Icon name='ios-settings' size={20} style={{ color: tintColor }} />
           }},
-        "DetailTab" : {screen:SudaDetailChat}
+        "SudaDetailChatTab" : {screen:SudaDetailChat},
+        "SudaUpdateChatTab" : {screen:SudaUpdateChat}
     }, {
         // animationEnabled: true,
         // swipeEnabled: true,
