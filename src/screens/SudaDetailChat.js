@@ -9,38 +9,32 @@ import GLOBAL from "./Global.js";
 
 class CommentList extends Component {
     constructor(props) {
-        console.log("CommentList constructor");
+        console.log("*** SudaDetailChat > CommentList *** constructor");
 
         super(props);
         this.state = {localComments:[]};
     }
-
     componentDidMount() {
-        console.log("CommentList componentDidMount");
-        this.getData();
+        console.log("*** SudaDetailChat > CommentList *** componentDidMount");
+        this.getLocalComments();
     }
-
     componentDidUpdate() {
-        console.log("CommentList componentDidUpdate");
+        console.log("*** SudaDetailChat > CommentList *** componentDidUpdate");
     }
- 
     componentWillUnmount() {
-        console.log("CommentList componentWillUnmount");
+        console.log("*** SudaDetailChat > CommentList *** componentWillUnmount");
     }
 
-    getData() {
-        var postId = this.props.navigation.getParam("localPostId");
-        console.log("SudaTabHome → SudaDetailChat this.props.navigation.getParam(\"localPostId\") = " + postId);
-
+    /* 댓글 조회(/api/localComment/ GET) 함수 */
+    getLocalComments() {
+        var localPostId = this.props.navigation.getParam("localPostId");
+        
         axios({
             method  :"GET",
-            url     :"http://3.35.202.156/api/localComment/" + postId,
+            url     :"http://3.35.202.156/api/localComment/" + localPostId,
             headers :{"X-AUTH-TOKEN":GLOBAL.TOKEN},
             data    :{}
         }).then(({data}) => {
-            console.log("CommentList getData");
-            console.log(JSON.stringify(data.data));
-
             var localComments = [];
             data.data.list.forEach(function(item) {
                 localComments.push(item);
@@ -52,11 +46,11 @@ class CommentList extends Component {
             this.setState({localComments:localComments});
         });
     }
-
+    /* 댓글 수정(/api/localComment/ POST 함수) */
     updateLocalComment(localComment) {
-        
+        Alert.alert("", "댓글 수정 개발중...", [{text:"예"}]);
     }
-
+    /* 댓글 삭제(/api/localComment/ DELETE 함수) */
     deleteLocalComment(localComment) {
         Alert.alert("", "정말 삭제하시겠습니까?", [{text:"예", onPress:() => {
             axios({
@@ -66,17 +60,17 @@ class CommentList extends Component {
                 data    :{}
             }).then(({data}) => {
                 if(data.resultCode == "00")
-                    this.getData();
+                    this.getLocalComments();
             });
         }}, {text:"아니오"}]);
     }
-
+    /* 대댓글 등록(/api/localComment/ POST) 함수 */
     addSubComment(localComment) {
-        
+        Alert.alert("", "대댓글 등록 개발중...", [{text:"예"}]);
     }
 
     render() {
-        console.log("CommentList render");
+        console.log("*** SudaDetailChat > CommentList *** render");
 
         return (
             this.state.localComments.map(localComment => {
@@ -99,42 +93,36 @@ class CommentList extends Component {
 
 class SudaDetailChat extends Component {
     constructor(props) {
-        console.log("SudaDetailChat constructor");
+        console.log("*** SudaDetailChat *** constructor");
 
         super(props);
         this.state = {localPost:{}, content:""};
     }
-
     componentDidMount() {
-        console.log("SudaDetailChat componentDidMount");
-        this.getData();
+        console.log("*** SudaDetailChat *** componentDidMount");
+        this.getLocalPost();
     }
-
     componentDidUpdate() {
-        console.log("SudaDetailChat componentDidUpdate");
+        console.log("*** SudaDetailChat *** componentDidUpdate");
     }
- 
     componentWillUnmount() {
-        console.log("SudaDetailChat componentWillUnmount");
+        console.log("*** SudaDetailChat *** componentWillUnmount");
     }
 
-    getData() {
+    /* 게시글 상세 조회(/api/localPost/ GET) 함수 */
+    getLocalPost() {
         var postId = this.props.navigation.getParam("localPostId");
-        console.log("SudaTabHome → SudaDetailChat this.props.navigation.getParam(\"localPostId\") = " + postId);
-
+        
         axios({
             method  :"GET",
             url     :"http://3.35.202.156/api/localPost/" + postId,
             headers :{"X-AUTH-TOKEN":GLOBAL.TOKEN},
             data    :{}
         }).then(({data}) => {
-            console.log("SudaDetailChat getData");
-            console.log(JSON.stringify(data.data));
-
             this.setState({localPost:data.data});
         });
     }
-
+    /* 게시글 컨트롤 메뉴 함수 */
     controlLocalPost(value, localPost) {
         switch(value) {
             case "수정하기":
@@ -162,7 +150,7 @@ class SudaDetailChat extends Component {
                 break;
         }
     }
-
+    /* 게시글 좋아요 등록 or 취소(/api/likePost POST or DELETE) 함수 */
     likeLocalPostOrNot(localPost) {
         axios({
             method  :localPost.likeYn ? "DELETE" : "POST",
@@ -171,10 +159,10 @@ class SudaDetailChat extends Component {
             data    :{}
         }).then(({data}) => {
             if(data.resultCode == "00") 
-                this.getData();
+                this.getLocalPost();
         });
     }
-
+    /* 댓글 등록(/api/localComment POST) 함수 */
     addLocalContent() {
         if(this.state.content != "")
             axios({
@@ -183,13 +171,13 @@ class SudaDetailChat extends Component {
                 headers :{"X-AUTH-TOKEN":GLOBAL.TOKEN},
                 data    :{localPostId:this.state.localPost.localPostId, content:this.state.content}
             }).then(({data}) => {
-                if(data.resultCode == "00")
-                    this.getData();
+                if(data.resultCode == "00") 
+                    this.getLocalPost();
             });
     }
 
     render() {
-        console.log("SudaDetailChat render");
+        console.log("*** SudaDetailChat *** render");
 
         return (
             <View style={{padding:20, height:"100%", backgroundColor:"#ffffff"}}>

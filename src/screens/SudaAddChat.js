@@ -6,24 +6,22 @@ import GLOBAL from "./Global.js";
 
 class SudaAddChat extends Component {
     constructor(props) {
-        console.log("SudaAddChat constructor");
+        console.log("*** SudaAddChat *** constructor");
 
         super(props);
         this.state = {title:"", content:"", curTitleLength:0, maxTitleLength:30};
     }
-
     componentDidMount() {
-        console.log("SudaAddChat componentDidMount");
+        console.log("*** SudaAddChat *** componentDidMount");
     }
-
     componentDidUpdate() {
-        console.log("SudaAddChat componentDidUpdate");
+        console.log("*** SudaAddChat *** componentDidUpdate");
     }
- 
     componentWillUnmount() {
-        console.log("SudaAddChat componentWillUnmount");
+        console.log("*** SudaAddChat *** componentWillUnmount");
     }
 
+    /* 게시글 등록(/api/localPost POST) 함수 */
     addLocalPost() {
         if(this.state.title == "" && this.state.contents == "")  
             this.props.navigation.goBack();
@@ -41,7 +39,7 @@ class SudaAddChat extends Component {
     }
 
     render() {
-        console.log("SudaAddChat render");
+        console.log("*** SudaAddChat *** render");
 
         return (
             <View style={{backgroundColor:"#ffffff", padding:20}}>

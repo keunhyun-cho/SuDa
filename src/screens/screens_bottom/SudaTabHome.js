@@ -9,37 +9,34 @@ import GLOBAL from "../Global.js";
 
 class PostList extends Component {
     constructor(props) {
-        console.log("PostList constructor");
+        console.log("*** SudaTabHome > PostList *** constructor");
 
         super(props);
         this.state = {localPosts:[]};
     }
-
     componentDidMount() {
-        console.log("PostList componentDidMount");
-        this.getData();
+        console.log("*** SudaTabHome > PostList *** componentDidMount");
+        this.getLocalPosts();
     }
-
     componentDidUpdate() {
-        console.log("PostList componentDidUpdate");
+        console.log("*** SudaTabHome > PostList *** componentDidUpdate");
     }
- 
     componentWillUnmount() {
-        console.log("PostList componentWillUnmount");
+        console.log("*** SudaTabHome > PostList *** componentWillUnmount");
     }
 
-    getData() {
+    /* 게시글 리스트 조회(/api/localPost GET) 함수 */
+    getLocalPosts() {
         axios({
             method  :"GET",
             url     :"http://3.35.202.156/api/localPost",
             headers :{"X-AUTH-TOKEN":GLOBAL.TOKEN},
             data    :{}
         }).then(({data}) => {
-            console.log(JSON.stringify(data.data));
             this.setState({localPosts:data.data.list});
         });
     }
-
+    /* 게시글 컨트롤 메뉴 함수 */
     controlLocalPost(value, localPost) {
         switch(value) {
             case "수정하기":
@@ -67,11 +64,11 @@ class PostList extends Component {
                 break;
         }
     }
-
+    /* 게시글 상세조회 화면 이동 함수 */
     goToDetailChat(localPost) {
         this.props.navigation.navigate("SudaDetailChatTab", {localPostId:localPost.localPostId});
     }
-
+    /* 게시글 좋아요 등록 or 취소(/api/likePost POST or DELETE) 함수 */
     likeLocalPostOrNot(localPost) {
         axios({
             method  :localPost.likeYn ? "DELETE" : "POST",
@@ -80,12 +77,12 @@ class PostList extends Component {
             data    :{}
         }).then(({data}) => {
             if(data.resultCode == "00") 
-                this.getData();
+                this.getLocalPosts();
         });
     }
 
     render() {
-        console.log("PostList render");
+        console.log("*** SudaTabHome > PostList *** render");
 
         return (
             this.state.localPosts.map(localPost => {
@@ -117,8 +114,23 @@ class PostList extends Component {
 }
 
 class SudaTabHome extends Component {
+    constructor(props) {
+        console.log("*** SudaTabHome *** constructor");
+
+        super(props);
+    }
+    componentDidMount() {
+        console.log("*** SudaTabHome *** componentDidMount");
+    }
+    componentDidUpdate() {
+        console.log("*** SudaTabHome *** componentDidUpdate");
+    }
+    componentWillUnmount() {
+        console.log("*** SudaTabHome *** componentWillUnmount");
+    }
+    
     render() {
-        console.log("SudaTabHome render");
+        console.log("*** SudaTabHome *** render");
 
         return (
             <View>

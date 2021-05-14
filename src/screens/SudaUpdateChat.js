@@ -6,25 +6,25 @@ import GLOBAL from "./Global.js";
 
 class SudaUpdateChat extends Component {
     constructor(props) {
-        console.log("SudaUpdateChat constructor");
+        console.log("*** SudaUpdateChat *** constructor");
 
         super(props);
     }
 
     componentDidMount() {
-        console.log("SudaUpdateChat componentDidMount");
+        console.log("*** SudaUpdateChat *** componentDidMount");
     }
 
     componentDidUpdate() {
-        console.log("SudaUpdateChat componentDidUpdate");
+        console.log("*** SudaUpdateChat *** componentDidUpdate");
     }
  
     componentWillUnmount() {
-        console.log("SudaUpdateChat componentWillUnmount");
+        console.log("*** SudaUpdateChat *** componentWillUnmount");
     }
 
     render() {
-        console.log("SudaUpdateChat render");
+        console.log("*** SudaUpdateChat *** render");
 
         return (
             <View></View>
