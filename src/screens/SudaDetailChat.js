@@ -32,8 +32,12 @@ class CommentList extends Component {
         var postId = this.props.navigation.getParam("postId");
         console.log("SudaTabHome → SudaDetailChat this.props.navigation.getParam(\"postId\") = " + postId);
 
-        axios.get("http://3.35.202.156/api/localComment/" + postId, {headers:{"X-AUTH-TOKEN":GLOBAL.TOKEN}, data:{}})
-        .then(({data}) => {
+        axios({
+            method  :"GET",
+            url     :"http://3.35.202.156/api/localComment/" + postId,
+            headers :{"X-AUTH-TOKEN":GLOBAL.TOKEN},
+            data    :{}
+        }).then(({data}) => {
             console.log("CommentList getData");
             console.log(JSON.stringify(data.data));
 
@@ -46,7 +50,7 @@ class CommentList extends Component {
             })
 
             this.setState({localComments:localComments});
-        })
+        });
     }
 
     updateLocalComment(localComment) {
@@ -106,13 +110,17 @@ class SudaDetailChat extends Component {
         var postId = this.props.navigation.getParam("postId");
         console.log("SudaTabHome → SudaDetailChat this.props.navigation.getParam(\"postId\") = " + postId);
 
-        axios.get("http://3.35.202.156/api/localPost/" + postId, {headers:{"X-AUTH-TOKEN":GLOBAL.TOKEN}, data:{}})
-        .then(({data}) => {
+        axios({
+            method  :"GET",
+            url     :"http://3.35.202.156/api/localPost/" + postId,
+            headers :{"X-AUTH-TOKEN":GLOBAL.TOKEN},
+            data    :{}
+        }).then(({data}) => {
             console.log("SudaDetailChat getData");
             console.log(JSON.stringify(data.data));
 
             this.setState({localPost:data.data});
-        })
+        });
     }
 
     controlLocalPost(value, localPost) {
@@ -154,9 +162,9 @@ class SudaDetailChat extends Component {
                     <Text style={{height:150, fontSize:17, textAlignVertical:"top", textAlign:"left", fontWeight:"600", paddingTop:20}}>{this.state.localPost.contents}</Text>
                     <View style={{height:20, flexDirection:"row", alignItems:"center", paddingBottom:20, borderBottomWidth:0.5, borderBottomColor:"#e0e0e0"}}>
                         <Icon name="chatbox-ellipses" size={12} color="#808080" style={{marginTop:2}}></Icon>
-                        <Text style={{width:35, fontSize:14, color:"#808080", marginLeft:4}}>{this.state.localPost.likeCnt}</Text>
+                        <Text style={{width:35, fontSize:14, color:"#808080", marginLeft:4}}>{this.state.localPost.commentCnt}</Text>
                         <Icon name="thumbs-up" size={12} color={this.state.localPost.likeYn ? "#50bcdf" : "#808080"}></Icon>
-                        <Text style={{width:35, fontSize:14, color:(this.state.localPost.likeYn ? "#50bcdf" : "#808080"), marginLeft:4}}>{this.state.localPost.commentCnt}</Text>
+                        <Text style={{width:35, fontSize:14, color:(this.state.localPost.likeYn ? "#50bcdf" : "#808080"), marginLeft:4}}>{this.state.localPost.likeCnt}</Text>
                     </View>
                 </View>
                 <ScrollView>

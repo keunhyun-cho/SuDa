@@ -12,7 +12,7 @@ class PostList extends Component {
         console.log("PostList constructor");
 
         super(props);
-        this.state = {localPosts:[]};
+        this.state = {localPosts:[], localPostLikeColor:""};
     }
 
     componentDidMount() {
@@ -29,13 +29,15 @@ class PostList extends Component {
     // }
 
     getData() {
-        axios.get("http://3.35.202.156/api/localPost", {headers:{"X-AUTH-TOKEN":GLOBAL.TOKEN}, data:{}})
-        .then(({data}) => {
-            console.log("PostList getData");
+        axios({
+            method  :"GET",
+            url     :"http://3.35.202.156/api/localPost",
+            headers :{"X-AUTH-TOKEN":GLOBAL.TOKEN},
+            data    :{}
+        }).then(({data}) => {
             console.log(JSON.stringify(data.data));
-            
             this.setState({localPosts:data.data.list});
-        })
+        });
     }
 
     controlLocalPost(value, localPost) {
@@ -66,11 +68,29 @@ class PostList extends Component {
         }
     }
 
+    goToDetailChat(localPost) {
+        this.props.navigation.navigate("SudaDetailChatTab", {postId:localPost.localPostId});
+    }
+
+    likeLocalPostOrNot(localPost) {
+        axios({
+            method  :localPost.likeYn ? "DELETE" : "POST",
+            url     :"http://3.35.202.156/api/likePost/" + localPost.localPostId,
+            headers :{"X-AUTH-TOKEN":GLOBAL.TOKEN},
+            data    :{}
+        }).then(({data}) => {
+            if(data.resultCode == "00") 
+                this.getData();
+        });
+    }
+
     render() {
+        console.log("PostList render");
+
         return (
             this.state.localPosts.map(localPost => {
                 return (
-                    <TouchableOpacity onPress={() => {this.props.navigation.navigate("SudaDetailChatTab", {postId:localPost.localPostId})}} key={localPost.localPostId} style={{height:120, paddingTop:10, paddingLeft:10, borderBottomWidth:0.5, borderBottomColor:"#e0e0e0", backgroundColor:"#ffffff"}}>
+                    <TouchableOpacity onPress={() => {this.goToDetailChat(localPost);}} key={localPost.localPostId} style={{height:120, paddingTop:10, paddingLeft:10, borderBottomWidth:0.5, borderBottomColor:"#e0e0e0", backgroundColor:"#ffffff"}}>
                         <View style={{flexDirection:"row", justifyContent:"space-between", height:35}}>
                             <Text style={{height:20, width:"50%", color:"#50bcdf", fontWeight:"700", fontSize:15}}>{localPost.title}</Text>
                             <ModalDropDown onSelect={(idx, value) => {this.controlLocalPost(value, localPost);}} options={(localPost.regMemberId == GLOBAL.MEMBERID ? ["수정하기", "삭제하기"] : ["신고하기"])} defaultValue={localPost.regDate.substring(0, 10)} textStyle={{textAlign:"right", fontWeight:"600", color:"#808080", fontSize:13}} style={{marginRight:11, height:20, width:70}} dropdownTextStyle={{textAlign:"right", fontWeight:"600", color:"#808080", fontSize:13}} dropdownStyle={{width:80, height:"auto"}}></ModalDropDown>
@@ -78,10 +98,10 @@ class PostList extends Component {
                         <Text style={{height:50, color:"#2e2e2e", fontSize:14}}>{localPost.contents}</Text>
                         <View style={{flexDirection:"row", justifyContent:"space-between", height:25}}>
                             <View style={{flexDirection:"row", height:20, width:"50%", alignItems:"center"}}>
-                                <Icon onPress={() => {this.props.navigation.navigate("DetailTab", {postId:localPost.localPostId})}} name="chatbox-ellipses" size={12} color="#808080" style={{marginTop:2}}></Icon>
-                                <Text style={{width:35, fontSize:14, color:"#808080", marginLeft:4}}>{localPost.likeCnt}</Text>
-                                <Icon name="thumbs-up" size={12} color={localPost.likeYn ? "#50bcdf" : "#808080"}></Icon>
-                                <Text style={{width:35, fontSize:14, color:(localPost.likeYn ? "#50bcdf" : "#808080"), marginLeft:4}}>{localPost.commentCnt}</Text>
+                                <Icon onPress={() => {this.goToDetailChat(localPost);}} name="chatbox-ellipses" size={12} color="#808080" style={{marginTop:2}}></Icon>
+                                <Text style={{width:35, fontSize:14, color:"#808080", marginLeft:4}}>{localPost.commentCnt}</Text>
+                                <Icon onPress={() => {this.likeLocalPostOrNot(localPost);}} name="thumbs-up" size={12} color={localPost.likeYn ? "#50bcdf" : "#808080"}></Icon>
+                                <Text style={{width:35, fontSize:14, color:(localPost.likeYn ? "#50bcdf" : "#808080"), marginLeft:4}}>{localPost.likeCnt}</Text>
                             </View>
                             <Text style={{width:"50%", color:"#808080", fontSize:13, fontWeight:"600", textAlign:"right", paddingRight:15}}>{localPost.regMemberNm}</Text>
                         </View>
