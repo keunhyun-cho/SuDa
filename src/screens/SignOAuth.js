@@ -40,71 +40,94 @@ class SignOAuth extends Component {
   };
 
   SetSignUp = async () => {
-    //setTimeout(()=>{navigation.navigate('SignOAuthMainPage')},3000)
-    let signUpData, loginData;
+    axios({
+      method:"POST",
+      url   :"http://3.35.202.156/api/login",
+      data  :{memberId:350, password:"SM4hv7B"}
+    }).then(({data}) => {
+      if(data.resultCode == "00") {
+        GLOBAL.MEMBERNM = "공덕동_312";
+        console.log('GLOBAL.MEMBERNM ===> ' + GLOBAL.MEMBERNM);
 
-    const { navigation } = this.props;
-    axios
-    .post("http://3.35.202.156/api/signUp",{
-      siNm : '서울시',
-      sggNm :  '마포구',
-      emdNm : '공덕동',
-    })
-    .then(({ data }) => {
-      signUpData = data;
-      
-      if(signUpData.resultCode=='00'){
-        axios
-        .post("http://3.35.202.156/api/login", {
-          memberId:signUpData.data.memberId,
-          password:signUpData.data.password
-        })
-        .then(({ data }) => {
-          loginData = data;
+        GLOBAL.MEMBERID = 350;
+        console.log('GLOBAL.MEMBERID ===> ' + GLOBAL.MEMBERID);
 
-          if(loginData.resultCode == '00'){
-            GLOBAL.MEMBERNM = signUpData.data.memberNm;
-            console.log('GLOBAL.MEMBERNM ===> ' + GLOBAL.MEMBERNM);
+        GLOBAL.TOKEN = data.data.token;
+        console.log('GLOBAL.TOKEN ===> ' + GLOBAL.TOKEN);
 
-            GLOBAL.MEMBERID = signUpData.data.memberId;
-            console.log('GLOBAL.MEMBERID ===> ' + GLOBAL.MEMBERID);
-
-            GLOBAL.TOKEN = loginData.data.token;
-            console.log('GLOBAL.TOKEN ===> ' + GLOBAL.TOKEN);
-
-            navigation.navigate('SignOAuthMainPage',{LoginId : signUpData.data.memberNm});
-          }else{
-            Alert.alert(
-              "서비스 작업중 입니다.",
-              "앱 재 로그인 바랍니다.",
-              [{
-                  text: "확인",
-                  onPress: () => console.log("OK Press"),
-              }],
-              { cancelable: false }
-            );
-          }
-        
-        })
-      }else{
-        Alert.alert(
-          "서비스 작업중 입니다.",
-          "앱 재 로그인 바랍니다.",
-          [{
-              text: "확인",
-              onPress: () => console.log("OK Press"),
-           }],
-          { cancelable: false }
-        );
-      }
-    
-    })
-    .catch(e => {  // API 호출이 실패한 경우
-      console.error(e);  // 에러표시
-      this.setState({  
-        loading: false
-      });
+        this.props.navigation.navigate("SignOAuthMainPage", {LoginId:GLOBAL.MEMBERNM});
+      } 
+      else 
+        Alert.alert("서비스 작업중 입니다.", "앱 재 로그인 바랍니다.", [{text:"확인", onPress: () => console.log("OK Press")}], {cancelable:false});
     });
+    return;
+
+
+    //setTimeout(()=>{navigation.navigate('SignOAuthMainPage')},3000)
+    // let signUpData, loginData;
+
+    // const { navigation } = this.props;
+    // axios
+    // .post("http://3.35.202.156/api/signUp",{
+    //   siNm : '서울시',
+    //   sggNm :  '마포구',
+    //   emdNm : '공덕동',
+    // })
+    // .then(({ data }) => {
+    //   signUpData = data;
+
+    //   if(signUpData.resultCode=='00'){
+    //     axios
+    //     .post("http://3.35.202.156/api/login", {
+    //       memberId:signUpData.data.memberId,
+    //       password:signUpData.data.password
+    //     })
+    //     .then(({ data }) => {
+    //       loginData = data;
+
+    //       if(loginData.resultCode == '00'){
+    //         GLOBAL.MEMBERNM = signUpData.data.memberNm;
+    //         console.log('GLOBAL.MEMBERNM ===> ' + GLOBAL.MEMBERNM);
+
+    //         GLOBAL.MEMBERID = signUpData.data.memberId;
+    //         console.log('GLOBAL.MEMBERID ===> ' + GLOBAL.MEMBERID);
+
+    //         GLOBAL.TOKEN = loginData.data.token;
+    //         console.log('GLOBAL.TOKEN ===> ' + GLOBAL.TOKEN);
+
+    //         navigation.navigate('SignOAuthMainPage',{LoginId : signUpData.data.memberNm});
+    //       }else{
+    //         Alert.alert(
+    //           "서비스 작업중 입니다.",
+    //           "앱 재 로그인 바랍니다.",
+    //           [{
+    //               text: "확인",
+    //               onPress: () => console.log("OK Press"),
+    //           }],
+    //           { cancelable: false }
+    //         );
+    //       }
+        
+    //     })
+    //   }else{
+    //     Alert.alert(
+    //       "서비스 작업중 입니다.",
+    //       "앱 재 로그인 바랍니다.",
+    //       [{
+    //           text: "확인",
+    //           onPress: () => console.log("OK Press"),
+    //        }],
+    //       { cancelable: false }
+    //     );
+    //   }
+    
+    // })
+    // .catch(e => {  // API 호출이 실패한 경우
+    //   console.error(e);  // 에러표시
+    //   this.setState({  
+    //     loading: false
+    //   });
+    // });
   }
 
 
