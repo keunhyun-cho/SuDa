@@ -24,9 +24,9 @@ class CommentList extends Component {
         console.log("CommentList componentDidUpdate");
     }
  
-    // componentWillUnmount() {
-    //     console.log("CommentList componentWillUnmount");
-    // }
+    componentWillUnmount() {
+        console.log("CommentList componentWillUnmount");
+    }
 
     getData() {
         var postId = this.props.navigation.getParam("postId");
@@ -66,6 +66,8 @@ class CommentList extends Component {
     }
 
     render() {
+        console.log("CommentList render");
+
         return (
             this.state.localComments.map(localComment => {
                 return (
@@ -102,9 +104,9 @@ class SudaDetailChat extends Component {
         console.log("SudaDetailChat componentDidUpdate");
     }
  
-    // componentWillUnmount() {
-    //     console.log("SudaDetailChat componentWillUnmount");
-    // }
+    componentWillUnmount() {
+        console.log("SudaDetailChat componentWillUnmount");
+    }
 
     getData() {
         var postId = this.props.navigation.getParam("postId");
@@ -152,6 +154,8 @@ class SudaDetailChat extends Component {
     }
 
     render() {
+        console.log("SudaDetailChat render");
+
         return (
             <View style={{padding:20, height:"100%", backgroundColor:"#ffffff"}}>
                 <View>

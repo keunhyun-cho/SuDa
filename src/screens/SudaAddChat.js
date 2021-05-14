@@ -20,9 +20,9 @@ class SudaAddChat extends Component {
         console.log("SudaAddChat componentDidUpdate");
     }
  
-    // componentWillUnmount() {
-    //     console.log("SudaAddChat componentWillUnmount");
-    // }
+    componentWillUnmount() {
+        console.log("SudaAddChat componentWillUnmount");
+    }
 
     addLocalPost() {
         if(this.state.title == "" && this.state.contents == "")  
@@ -41,6 +41,8 @@ class SudaAddChat extends Component {
     }
 
     render() {
+        console.log("SudaAddChat render");
+
         return (
             <View style={{backgroundColor:"#ffffff", padding:20}}>
                 <TouchableOpacity onPress={() => {this.addLocalPost();}}>

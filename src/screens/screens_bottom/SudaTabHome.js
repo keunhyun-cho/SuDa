@@ -24,9 +24,9 @@ class PostList extends Component {
         console.log("PostList componentDidUpdate");
     }
  
-    // componentWillUnmount() {
-    //     console.log("PostList componentWillUnmount");
-    // }
+    componentWillUnmount() {
+        console.log("PostList componentWillUnmount");
+    }
 
     getData() {
         axios({
@@ -114,6 +114,8 @@ class PostList extends Component {
 
 class SudaTabHome extends Component {
     render() {
+        console.log("SudaTabHome render");
+
         return (
             <View>
                 <Text style={{fontSize:16, height:50, textAlignVertical:"center", textAlign:"center", fontWeight:"700", padding:10, borderBottomWidth:0.5, borderBottomColor:"#e0e0e0", backgroundColor:"#ffffff"}}>공덕동 수다방</Text>
