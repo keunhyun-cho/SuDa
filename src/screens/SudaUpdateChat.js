@@ -19,11 +19,13 @@ class SudaUpdateChat extends Component {
         console.log("SudaUpdateChat componentDidUpdate");
     }
  
-    // componentWillUnmount() {
-    //     console.log("SudaUpdateChat componentWillUnmount");
-    // }
+    componentWillUnmount() {
+        console.log("SudaUpdateChat componentWillUnmount");
+    }
 
     render() {
+        console.log("SudaUpdateChat render");
+
         return (
             <View></View>
         );
