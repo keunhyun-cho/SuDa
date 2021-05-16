@@ -24,6 +24,9 @@ class PostList extends Component {
     componentWillUnmount() {
         console.log("*** SudaTabHome > PostList *** componentWillUnmount");
     }
+    componentWillReceiveProps() {
+        console.log("*** SudaTabHome > PostList *** componentWillReceiveProps");
+    }
 
     /* 게시글 리스트 조회(/api/localPost GET) 함수 */
     getLocalPosts() {
@@ -33,6 +36,7 @@ class PostList extends Component {
             headers :{"X-AUTH-TOKEN":GLOBAL.TOKEN},
             data    :{}
         }).then(({data}) => {
+            console.log(JSON.stringify(data.data.list));
             this.setState({localPosts:data.data.list});
         });
     }
@@ -127,6 +131,9 @@ class SudaTabHome extends Component {
     }
     componentWillUnmount() {
         console.log("*** SudaTabHome *** componentWillUnmount");
+    }
+    componentWillReceiveProps() {
+        console.log("*** SudaTabHome *** componentWillReceiveProps");
     }
     
     render() {

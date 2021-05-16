@@ -24,6 +24,9 @@ class CommentList extends Component {
     componentWillUnmount() {
         console.log("*** SudaDetailChat > CommentList *** componentWillUnmount");
     }
+    componentWillReceiveProps() {
+        console.log("*** SudaDetailChat > CommentList *** componentWillReceiveProps");
+    }
 
     /* 댓글 조회(/api/localComment/ GET) 함수 */
     getLocalComments() {
@@ -107,6 +110,9 @@ class SudaDetailChat extends Component {
     }
     componentWillUnmount() {
         console.log("*** SudaDetailChat *** componentWillUnmount");
+    }
+    componentWillReceiveProps() {
+        console.log("*** SudaDetailChat *** componentWillReceiveProps");
     }
 
     /* 게시글 상세 조회(/api/localPost/ GET) 함수 */

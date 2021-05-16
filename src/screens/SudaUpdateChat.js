@@ -10,19 +10,19 @@ class SudaUpdateChat extends Component {
 
         super(props);
     }
-
     componentDidMount() {
         console.log("*** SudaUpdateChat *** componentDidMount");
     }
-
     componentDidUpdate() {
         console.log("*** SudaUpdateChat *** componentDidUpdate");
     }
- 
     componentWillUnmount() {
         console.log("*** SudaUpdateChat *** componentWillUnmount");
     }
-
+    componentWillReceiveProps() {
+        console.log("*** SudaUpdateChat *** componentWillReceiveProps");
+    }
+    
     render() {
         console.log("*** SudaUpdateChat *** render");
 

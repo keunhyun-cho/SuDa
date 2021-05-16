@@ -20,6 +20,9 @@ class SudaAddChat extends Component {
     componentWillUnmount() {
         console.log("*** SudaAddChat *** componentWillUnmount");
     }
+    componentWillReceiveProps() {
+        console.log("*** SudaAddChat *** componentWillReceiveProps");
+    }
 
     /* 게시글 등록(/api/localPost POST) 함수 */
     addLocalPost() {

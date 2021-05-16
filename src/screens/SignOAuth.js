@@ -47,13 +47,13 @@ class SignOAuth extends Component {
     }).then(({data}) => {
       if(data.resultCode == "00") {
         GLOBAL.MEMBERNM = "공덕동_312";
-        console.log('GLOBAL.MEMBERNM ===> ' + GLOBAL.MEMBERNM);
+        console.log("GLOBAL.MEMBERNM = " + GLOBAL.MEMBERNM);
 
         GLOBAL.MEMBERID = 350;
-        console.log('GLOBAL.MEMBERID ===> ' + GLOBAL.MEMBERID);
+        console.log("GLOBAL.MEMBERID = " + GLOBAL.MEMBERID);
 
         GLOBAL.TOKEN = data.data.token;
-        console.log('GLOBAL.TOKEN ===> ' + GLOBAL.TOKEN);
+        console.log("GLOBAL.TOKEN = " + GLOBAL.TOKEN);
 
         this.props.navigation.navigate("SignOAuthMainPage", {LoginId:GLOBAL.MEMBERNM});
       } 
