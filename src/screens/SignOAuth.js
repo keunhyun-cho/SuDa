@@ -17,25 +17,25 @@ class SignOAuth extends Component {
     this.GetDongsu();  // 주소 API 호출
   }
   GetDongsu = async () => {
-    console.log('getDongsu');
-    axios
-      .get("http://3.36.123.247/api/signUp/juso",{
-        typeCd : 1,
-      })
-      .then(({ data }) => {
-        console.log(data);
-        this.setState({ 
-          loading: true,
-          DongSu: data.juso
-        });
-      })
-      .catch(e => {  // API 호출이 실패한 경우
-        console.error(e);  // 에러표시
-        this.setState({  
-          loading: false
-        });
-      });
-      console.log('getDongsuEnd');
+    // console.log('getDongsu');
+    // axios
+    //   .get("http://3.36.123.247/api/signUp/juso",{
+    //     typeCd : 1,
+    //   })
+    //   .then(({ data }) => {
+    //     console.log(data);
+    //     this.setState({ 
+    //       loading: true,
+    //       DongSu: data.juso
+    //     });
+    //   })
+    //   .catch(e => {  // API 호출이 실패한 경우
+    //     console.error(e);  // 에러표시
+    //     this.setState({  
+    //       loading: false
+    //     });
+    //   });
+    //   console.log('getDongsuEnd');
 
   };
 

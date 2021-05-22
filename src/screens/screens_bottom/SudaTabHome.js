@@ -96,7 +96,7 @@ class PostList extends Component {
                             <Text style={{height:20, width:"50%", color:"#50bcdf", fontWeight:"700", fontSize:15}}>{localPost.title}</Text>
                             <ModalDropDown onSelect={(idx, value) => {this.controlLocalPost(value, localPost);}} options={(localPost.regMemberId == GLOBAL.MEMBERID ? ["수정하기", "삭제하기"] : ["신고하기"])} defaultValue={localPost.regDate.substring(0, 10)} textStyle={{textAlign:"right", fontWeight:"600", color:"#808080", fontSize:13}} style={{marginRight:11, height:20, width:70}} dropdownTextStyle={{textAlign:"right", fontWeight:"600", color:"#808080", fontSize:13}} dropdownStyle={{width:80, height:"auto"}}></ModalDropDown>
                         </View>
-                        <Text style={{height:50, color:"#2e2e2e", fontSize:14}}>{localPost.contents}</Text>
+                        <Text style={{height:50, color:"#2e2e2e", fontSize:14}}>{localPost.content}</Text>
                         <View style={{flexDirection:"row", justifyContent:"space-between", height:25}}>
                             <View style={{flexDirection:"row", height:20, width:"50%", alignItems:"center"}}>
                                 <Icon onPress={() => {this.goToDetailChat(localPost);}} name="chatbox-ellipses" size={12} color="#808080" style={{marginTop:2}}></Icon>
