@@ -26,7 +26,7 @@ class SudaAddChat extends Component {
 
     /* 게시글 등록(/api/localPost POST) 함수 */
     addLocalPost() {
-        if(this.state.title == "" && this.state.contents == "")  
+        if(this.state.title == "" && this.state.content == "")  
             this.props.navigation.goBack();
         else {
             axios({
