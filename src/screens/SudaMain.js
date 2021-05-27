@@ -9,6 +9,7 @@ import SudaUpdateChat from "./SudaUpdateChat";
 import { createBottomTabNavigator } from "react-navigation-tabs";
 import { createAppContainer } from "react-navigation";
 import Icon from "react-native-vector-icons/Ionicons";
+import BottomTabBar from "react-navigation-selective-tab-bar";
 import ActionButton from "react-native-action-button";
 
 
@@ -59,37 +60,39 @@ class SudaMain extends Component {
         }
       },
       "SudaDetailChatTab":{
-        screen:SudaDetailChat // @TODO BottomTabNavigator 내부끼리의 navigation을 위해 선언된 Tab으로 숨겨야 함.
+        screen:SudaDetailChat // @TODO BottomTabNavigator 내부끼리의 navigation을 위해 선언된 Tab으로 숨겨야 함.,
+        
       },
       "SudaUpdateChatTab" :{
         screen:SudaUpdateChat // @TODO BottomTabNavigator 내부끼리의 navigation을 위해 선언된 Tab으로 숨겨야 함.
       }
     }, {
-      animationEnabled:true,
-      swipeEnabled:true,
-      tabBarPosition:"bottom",
-      tabBarOptions:{
-        style:{
-          backgroundColor:"white"
-        },
-        iconStyle:{ 
-          ...Platform.select({
-            ios:{
-              height:35,
-              marginBottom:20
-            }
-          }) 
-        },
+      tabBarOptions: {
+        showLabel:false,
+        showIcon:true,
+        animationEnabled:true,
+        swipeEnabled:true,
+        tabBarPosition:"bottom",
         activeTintColor:"#00a4ff",
         inactiveTintColor:"#d1cece",
         upperCaseLabel:false,
-        showLabel:false,
-        showIcon:true,
+       },
+      tabBarComponent : props => {
+
+        return (
+          <BottomTabBar
+            {...props} // Required
+            display={["SudaTabHomeTab", "SudaTabAlertTab", "SudaTabInfoTab", "SudaTabSetTab"]} // Required
+            background="white" // Optional
+            style = {{ backgroundColor:"white" }}
+            
+          />
+        );
+   
       },
-      // defaultNavigationOptions:{
-      //   header:null
-      // }
+  
     });
+  
     
     // 2. BottomTabNavigator를 감싸는 AppContatiner 생성
     const AppContainer = createAppContainer(BottomTabNavigator);

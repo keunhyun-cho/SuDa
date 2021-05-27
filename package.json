@@ -24,6 +24,7 @@
     "react-native-screens": "2.16.1",
     "react-native-switch-toggle": "1.1.4",
     "react-navigation": "4.4.3",
+    "react-navigation-selective-tab-bar": "1.0.3",
     "react-navigation-tabs": "2.10.1",
     "toggle-switch-react-native": "3.2.0"
   },
