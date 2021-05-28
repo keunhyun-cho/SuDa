@@ -100,7 +100,7 @@ class SudaMain extends Component {
     return (
         <View style={{flex:1}}>
             <AppContainer/>
-            {/* <ActionButton style={{marginBottom:30}} buttonColor="#50bcdf" onPress={() => this.props.navigation.navigate("SudaAddChatPage")} /> */}
+            <ActionButton style={{marginBottom:30}} buttonColor="#50bcdf" onPress={() => this.props.navigation.navigate("SudaAddChatPage")} />
         </View> 
     );
   }
