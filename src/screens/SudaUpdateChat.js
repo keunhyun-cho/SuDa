@@ -37,15 +37,19 @@ class SudaUpdateChat extends Component {
 
     /* 게시글 수정(/api/localPost PUT) 함수 */
     updateLocalPost() {
-        axios({
-            method  :"PUT",
-            url     :"http://3.35.202.156/api/localPost/" + this.state.localPost.localPostId,
-            headers :{"X-AUTH-TOKEN":GLOBAL.TOKEN},
-            data    :{content:this.state.localPost.content}
-        }).then(({data}) => {
-            if(data.resultCode == "00")
-                this.props.navigation.navigate("SudaTabHomeTab", {});
-        }); 
+        if(this.state.localPost.content == "")  
+            this.props.navigation.goBack();
+        else {
+            axios({
+                method  :"PUT",
+                url     :"http://3.35.202.156/api/localPost/" + this.state.localPost.localPostId,
+                headers :{"X-AUTH-TOKEN":GLOBAL.TOKEN},
+                data    :{content:this.state.localPost.content}
+            }).then(({data}) => {
+                if(data.resultCode == "00")
+                    this.props.navigation.navigate("SudaTabHomeTab", {});
+            }); 
+        }
     }
    
     render() {
