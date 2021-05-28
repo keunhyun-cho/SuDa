@@ -41,7 +41,7 @@ class SudaAddChat extends Component {
         return (
             <View style={{backgroundColor:"#ffffff", padding:20}}>
                 <TouchableOpacity onPress={() => {this.addLocalPost();}}>
-                    <Text style={{fontSize:20, color:"#50bcdf", fontWeight:"700", alignSelf:"flex-end"}}>게시</Text>
+                    <Text style={{fontSize:20, color:"#50bcdf", fontWeight:"700", alignSelf:"flex-end"}}>등록</Text>
                 </TouchableOpacity>
                 <TextInput style={{color:"#686868", fontSize:19, height:50, borderBottomColor:"#50bcda", borderBottomWidth:0.5}} placeholder="제목을 입력하세요" maxLength={30} value={this.state.title} onChangeText={(text) => {this.setState({title:text, curTitleLength:text.length});}}/>
                 <Text id style={{marginTop:5, color:"#666666", fontSize:13, alignSelf:"flex-end"}}>{this.state.curTitleLength}/{this.state.maxTitleLength}</Text>
