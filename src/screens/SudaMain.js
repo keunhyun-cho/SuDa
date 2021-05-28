@@ -4,13 +4,13 @@ import SudaTabAlert from "./screens_bottom/SudaTabAlert";
 import SudaTabHome from "./screens_bottom/SudaTabHome";
 import SudaTabInfo from "./screens_bottom/SudaTabInfo";
 import SudaTabSet from "./screens_bottom/SudaTabSet";
+import SudaAddChat from "./SudaAddChat";
 import SudaDetailChat from "./SudaDetailChat";
 import SudaUpdateChat from "./SudaUpdateChat";
 import { createBottomTabNavigator } from "react-navigation-tabs";
 import { createAppContainer } from "react-navigation";
 import Icon from "react-native-vector-icons/Ionicons";
 import BottomTabBar from "react-navigation-selective-tab-bar";
-import ActionButton from "react-native-action-button";
 
 
 class SudaMain extends Component {
@@ -59,6 +59,9 @@ class SudaMain extends Component {
           tabBarIcon:({focused, tintColor}) => <Icon name="ios-settings" size={20} style={{color: tintColor}} />
         }
       },
+      "SudaAddChatTab" :{
+        screen:SudaAddChat    // @TODO BottomTabNavigator 내부끼리의 navigation을 위해 선언된 Tab으로 숨겨야 함.
+      },
       "SudaDetailChatTab":{
         screen:SudaDetailChat // @TODO BottomTabNavigator 내부끼리의 navigation을 위해 선언된 Tab으로 숨겨야 함.,
         
@@ -100,7 +103,6 @@ class SudaMain extends Component {
     return (
         <View style={{flex:1}}>
             <AppContainer/>
-            <ActionButton style={{marginBottom:30}} buttonColor="#50bcdf" onPress={() => this.props.navigation.navigate("SudaAddChatPage")} />
         </View> 
     );
   }

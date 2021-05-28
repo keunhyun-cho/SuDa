@@ -5,6 +5,7 @@ import ModalDropDown from "react-native-modal-dropdown";
 import Mailer from "react-native-mail";
 import axios from "axios";
 import GLOBAL from "../Global.js";
+import ActionButton from "react-native-action-button";
 
 
 class PostList extends Component {
@@ -151,6 +152,7 @@ class SudaTabHome extends Component {
                 <ScrollView>
                     <PostList navigation={this.props.navigation}/>
                 </ScrollView>
+                <ActionButton style={{marginBottom:30}} buttonColor="#50bcdf" onPress={() => this.props.navigation.navigate("SudaAddChatTab")} />
             </View>
         );
     }

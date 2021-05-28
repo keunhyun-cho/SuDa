@@ -21,7 +21,7 @@ class SudaAddChat extends Component {
     /* 게시글 등록(/api/localPost POST) 함수 */
     addLocalPost() {
         if(this.state.title == "" && this.state.content == "")  
-            this.props.navigation.goBack();
+            this.props.navigation.navigate("SudaTabHomeTab", {});
         else {
             axios({
                 method  :"POST",
@@ -30,7 +30,7 @@ class SudaAddChat extends Component {
                 headers :{"X-AUTH-TOKEN":GLOBAL.TOKEN},
             }).then(({data}) => {
                 if(data.resultCode == "00")
-                    this.props.navigation.navigate("SudaTabHomePage", {});
+                    this.props.navigation.navigate("SudaTabHomeTab", {});
             });
         }
     }
