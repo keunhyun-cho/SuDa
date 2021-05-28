@@ -176,7 +176,7 @@ class SudaDetailChat extends Component {
     likeLocalPostOrNot() {
         axios({
             method  :localPost.likeYn ? "DELETE" : "POST",
-            url     :"http://3.35.202.156/api/likePost/" + this.state.localPost.localPost.localPostId,
+            url     :"http://3.35.202.156/api/likePost/" + this.state.localPost.localPostId,
             headers :{"X-AUTH-TOKEN":GLOBAL.TOKEN},
             data    :{}
         }).then(({data}) => {

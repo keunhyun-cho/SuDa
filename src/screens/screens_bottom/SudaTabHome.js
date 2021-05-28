@@ -47,7 +47,6 @@ class PostList extends Component {
                 break;
 
             case "삭제하기":
-                console.log(localPost.localPostId);
                 Alert.alert("", "정말 삭제하시겠습니까?", [{text:"예", onPress:() => {
                     axios({
                         method  :"DELETE",
