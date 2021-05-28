@@ -9,23 +9,21 @@ import GLOBAL from "../Global.js";
 
 class PostList extends Component {
     constructor(props) {
-        console.log("*** SudaTabHome > PostList *** constructor");
+        console.log("[SudaTabHome's PostList] constructor");
 
         super(props);
         this.state = {localPosts:[]};
     }
+    componentWillReceiveProps(nextProps) {
+        console.log("[SudaTabHome's PostList] componentWillReceiveProps");
+        this.getLocalPosts();
+    }
     componentDidMount() {
-        console.log("*** SudaTabHome > PostList *** componentDidMount");
+        console.log("[SudaTabHome's PostList] componentDidMount");
         this.getLocalPosts();
     }
     componentDidUpdate() {
-        console.log("*** SudaTabHome > PostList *** componentDidUpdate");
-    }
-    componentWillUnmount() {
-        console.log("*** SudaTabHome > PostList *** componentWillUnmount");
-    }
-    componentWillReceiveProps() {
-        console.log("*** SudaTabHome > PostList *** componentWillReceiveProps");
+        console.log("[SudaTabHome's PostList] componentDidUpdate");
     }
 
     /* 게시글 리스트 조회(/api/localPost GET) 함수 */
@@ -44,11 +42,22 @@ class PostList extends Component {
     controlLocalPost(value, localPost) {
         switch(value) {
             case "수정하기":
-                this.props.navigation.navigate("SudaUpdateChatTab", localPost);
+                this.props.navigation.navigate("SudaUpdateChatTab", {localPostId:localPost.localPostId});
                 break;
 
             case "삭제하기":
-                Alert.alert("", "정말 삭제하시겠습니까?", [{text:"예", onPress:() => Alert.alert("", "게시글 삭제 API 연동 예정") }, {text:"아니오"}]);
+                console.log(localPost.localPostId);
+                Alert.alert("", "정말 삭제하시겠습니까?", [{text:"예", onPress:() => {
+                    axios({
+                        method  :"DELETE",
+                        url     :"http://3.35.202.156/api/localPost/" + localPost.localPostId,
+                        headers :{"X-AUTH-TOKEN":GLOBAL.TOKEN},
+                        data    :{}
+                    }).then(({data}) => {
+                        if(data.resultCode == "00")
+                            this.getLocalPosts();
+                    });
+                }}, {text:"아니오"}]);
                 break;
 
             case "신고하기":
@@ -86,7 +95,7 @@ class PostList extends Component {
     }
 
     render() {
-        console.log("*** SudaTabHome > PostList *** render");
+        console.log("[SudaTabHome's PostList] render");
 
         return (
             this.state.localPosts.map(localPost => {
@@ -119,25 +128,22 @@ class PostList extends Component {
 
 class SudaTabHome extends Component {
     constructor(props) {
-        console.log("*** SudaTabHome *** constructor");
+        console.log("[SudaTabHome] constructor");
 
         super(props);
     }
+    componentWillReceiveProps(nextProps) {
+        console.log("[SudaTabHome] componentWillReceiveProps");
+    }
     componentDidMount() {
-        console.log("*** SudaTabHome *** componentDidMount");
+        console.log("[SudaTabHome] componentDidMount");
     }
     componentDidUpdate() {
-        console.log("*** SudaTabHome *** componentDidUpdate");
-    }
-    componentWillUnmount() {
-        console.log("*** SudaTabHome *** componentWillUnmount");
-    }
-    componentWillReceiveProps() {
-        console.log("*** SudaTabHome *** componentWillReceiveProps");
+        console.log("[SudaTabHome] componentDidUpdate");
     }
     
     render() {
-        console.log("*** SudaTabHome *** render");
+        console.log("[SudaTabHome] render");
 
         return (
             <View>

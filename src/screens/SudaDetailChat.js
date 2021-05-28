@@ -9,29 +9,25 @@ import GLOBAL from "./Global.js";
 
 class CommentList extends Component {
     constructor(props) {
-        console.log("*** SudaDetailChat > CommentList *** constructor");
+        console.log("[SudaDetailChat's CommentList] constructor");
 
         super(props);
         this.state = {localComments:[]};
     }
+    componentWillReceiveProps(nextProps) {
+        console.log("[SudaDetailChat's CommentList] componentWillReceiveProps");
+        this.getLocalComments(nextProps.navigation.getParam("localPostId"));
+    }
     componentDidMount() {
-        console.log("*** SudaDetailChat > CommentList *** componentDidMount");
-        this.getLocalComments();
+        console.log("[SudaDetailChat's CommentList] componentDidMount");
+        this.getLocalComments(this.props.navigation.getParam("localPostId"));
     }
     componentDidUpdate() {
-        console.log("*** SudaDetailChat > CommentList *** componentDidUpdate");
-    }
-    componentWillUnmount() {
-        console.log("*** SudaDetailChat > CommentList *** componentWillUnmount");
-    }
-    componentWillReceiveProps() {
-        console.log("*** SudaDetailChat > CommentList *** componentWillReceiveProps");
+        console.log("[SudaDetailChat's CommentList] componentDidUpdate");
     }
 
     /* 댓글 조회(/api/localComment/ GET) 함수 */
-    getLocalComments() {
-        var localPostId = this.props.navigation.getParam("localPostId");
-        
+    getLocalComments(localPostId) {
         axios({
             method  :"GET",
             url     :"http://3.35.202.156/api/localComment/" + localPostId,
@@ -51,7 +47,7 @@ class CommentList extends Component {
     }
     /* 댓글 수정(/api/localComment/ POST 함수) */
     updateLocalComment(localComment) {
-        Alert.alert("", "댓글 수정 개발중...", [{text:"예"}]);
+        this.props.navigation.navigate("SudaDetailChatTab", {localCommentFlag:"U", localComment:localComment});
     }
     /* 댓글 삭제(/api/localComment/ DELETE 함수) */
     deleteLocalComment(localComment) {
@@ -63,17 +59,17 @@ class CommentList extends Component {
                 data    :{}
             }).then(({data}) => {
                 if(data.resultCode == "00")
-                    this.getLocalComments();
+                    this.props.navigation.navigate("SudaDetailChatTab", {localCommentFlag:"D"});
             });
         }}, {text:"아니오"}]);
     }
     /* 대댓글 등록(/api/localComment/ POST) 함수 */
     addSubComment(localComment) {
-        Alert.alert("", "대댓글 등록 개발중...", [{text:"예"}]);
+        this.props.navigation.navigate("SudaDetailChatTab", {localCommentFlag:"C", localComment:localComment});
     }
 
     render() {
-        console.log("*** SudaDetailChat > CommentList *** render");
+        console.log("[SudaDetailChat's CommentList] render");
 
         return (
             this.state.localComments.map(localComment => {
@@ -96,36 +92,46 @@ class CommentList extends Component {
 
 class SudaDetailChat extends Component {
     constructor(props) {
-        console.log("*** SudaDetailChat *** constructor");
+        console.log("[SudaDetailChat] constructor");
 
         super(props);
-        this.state = {localPost:{}, content:""};
+        this.state = {localPost:{}, localComment:{comment:""}, localCommentFlag:""};
+    }
+    componentWillReceiveProps(nextProps) {
+        console.log("[SudaDetailChat] componentWillReceiveProps");
+
+        this.setState({localCommentFlag:nextProps.navigation.getParam("localCommentFlag")});
+        switch(this.state.localCommentFlag) {
+            case "U": // 댓글 수정
+                this.setState({localComment:nextProps.navigation.getParam("localComment")});
+                break;
+
+            case "C": // 대댓글 등록
+                this.setState({localComment:nextProps.navigation.getParam("localComment")});
+                break;
+
+            case "D": // 댓글 삭제, 재조회만
+                this.getLocalPost(this.state.localPost.localPostId);
+                break;
+        }
     }
     componentDidMount() {
-        console.log("*** SudaDetailChat *** componentDidMount");
-        this.getLocalPost();
+        console.log("[SudaDetailChat] componentDidMount");
+        this.getLocalPost(this.props.navigation.getParam("localPostId"));
     }
     componentDidUpdate() {
-        console.log("*** SudaDetailChat *** componentDidUpdate");
+        console.log("[SudaDetailChat] componentDidUpdate");
     }
-    componentWillUnmount() {
-        console.log("*** SudaDetailChat *** componentWillUnmount");
-    }
-    componentWillReceiveProps() {
-        console.log("*** SudaDetailChat *** componentWillReceiveProps");
-    }
-
+   
     /* 게시글 상세 조회(/api/localPost/ GET) 함수 */
-    getLocalPost() {
-        var postId = this.props.navigation.getParam("localPostId");
-        
+    getLocalPost(postId) {
         axios({
             method  :"GET",
             url     :"http://3.35.202.156/api/localPost/" + postId,
             headers :{"X-AUTH-TOKEN":GLOBAL.TOKEN},
             data    :{}
         }).then(({data}) => {
-            this.setState({localPost:data.data});
+            this.setState({localPost:data.data, localComment:{content:""}, localCommentFlag:""});
         });
     }
     /* 게시글 컨트롤 메뉴 함수 */
@@ -157,33 +163,64 @@ class SudaDetailChat extends Component {
         }
     }
     /* 게시글 좋아요 등록 or 취소(/api/likePost POST or DELETE) 함수 */
-    likeLocalPostOrNot(localPost) {
+    likeLocalPostOrNot() {
         axios({
             method  :localPost.likeYn ? "DELETE" : "POST",
-            url     :"http://3.35.202.156/api/likePost/" + localPost.localPostId,
+            url     :"http://3.35.202.156/api/likePost/" + this.state.localPost.localPost.localPostId,
             headers :{"X-AUTH-TOKEN":GLOBAL.TOKEN},
             data    :{}
         }).then(({data}) => {
             if(data.resultCode == "00") 
-                this.getLocalPost();
+                this.getLocalPost(this.state.localPost.localPostId);
         });
     }
-    /* 댓글 등록(/api/localComment POST) 함수 */
-    addLocalContent() {
-        if(this.state.content != "")
-            axios({
-                method  :"POST",
-                url     :"http://3.35.202.156/api/localComment",
-                headers :{"X-AUTH-TOKEN":GLOBAL.TOKEN},
-                data    :{localPostId:this.state.localPost.localPostId, content:this.state.content}
-            }).then(({data}) => {
-                if(data.resultCode == "00") 
-                    this.getLocalPost();
-            });
+    /* 
+       댓글 수정(/api/localComment/localCommentId PUT) 
+       대댓글 등록(/api/localComment/localCommentId POST)
+       댓글 등록(/api/localComment POST) 함수
+    */
+    updateLocalComment() {
+        if(this.state.localComment.content != "") {
+            switch(this.state.localCommentFlag) {
+                case "U": // 댓글 수정
+                    axios({
+                        method  :"PUT",
+                        url     :"http://3.35.202.156/api/localComment/" + this.state.localComment.commentId,
+                        headers :{"X-AUTH-TOKEN":GLOBAL.TOKEN},
+                        data    :{localPostId:this.state.localPost.localPostId, content:this.state.localComment.content}
+                    }).then(({data}) => {
+                        if(data.resultCode == "00") 
+                            this.getLocalPost(this.state.localPost.localPostId);
+                    });
+                    break;
+                case "C": // 대댓글 등록
+                    axios({
+                        method  :"POST",
+                        url     :"http://3.35.202.156/api/localComment/" + this.state.localComment.commentId,
+                        headers :{"X-AUTH-TOKEN":GLOBAL.TOKEN},
+                        data    :{localPostId:this.state.localPost.localPostId, content:this.state.localComment.content}
+                    }).then(({data}) => {
+                        if(data.resultCode == "00") 
+                            this.getLocalPost(this.state.localPost.localPostId);
+                    });
+                    break;
+                default:  // 댓글 등록
+                    axios({
+                        method  :"POST",
+                        url     :"http://3.35.202.156/api/localComment",
+                        headers :{"X-AUTH-TOKEN":GLOBAL.TOKEN},
+                        data    :{localPostId:this.state.localPost.localPostId, content:this.state.localComment.content}
+                    }).then(({data}) => {
+                        if(data.resultCode == "00") 
+                            this.getLocalPost(this.state.localPost.localPostId);
+                    });
+                    break;
+            }
+        }
     }
 
     render() {
-        console.log("*** SudaDetailChat *** render");
+        console.log("[SudaDetailChat] render");
 
         return (
             <View style={{padding:20, height:"100%", backgroundColor:"#ffffff"}}>
@@ -196,8 +233,8 @@ class SudaDetailChat extends Component {
                     <View style={{height:20, flexDirection:"row", alignItems:"center", paddingBottom:20, borderBottomWidth:0.5, borderBottomColor:"#e0e0e0"}}>
                         <Icon name="chatbox-ellipses" size={12} color="#808080" style={{marginTop:2}}></Icon>
                         <Text style={{width:35, fontSize:14, color:"#808080", marginLeft:4}}>{this.state.localPost.commentCnt}</Text>
-                        <Icon onPress={() => {this.likeLocalPostOrNot(this.state.localPost);}} name="thumbs-up" size={12} color={this.state.localPost.likeYn ? "#50bcdf" : "#808080"}></Icon>
-                        <TouchableOpacity onPress={() => {this.likeLocalPostOrNot(this.state.localPost);}}>
+                        <Icon onPress={() => {this.likeLocalPostOrNot();}} name="thumbs-up" size={12} color={this.state.localPost.likeYn ? "#50bcdf" : "#808080"}></Icon>
+                        <TouchableOpacity onPress={() => {this.likeLocalPostOrNot();}}>
                             <Text style={{width:35, fontSize:14, color:(this.state.localPost.likeYn ? "#50bcdf" : "#808080"), marginLeft:4}}>{this.state.localPost.likeCnt}</Text>
                         </TouchableOpacity>
                     </View>
@@ -206,9 +243,9 @@ class SudaDetailChat extends Component {
                     <CommentList navigation={this.props.navigation}/>
                 </ScrollView>
                 <View style={{marginTop:10, height:40, flexDirection:"row", alignItems:"center"}}>
-                    <TextInput style={{width:"90%", borderWidth:1, borderColor:"#e0e0e0", paddingTop:10}} value={this.state.content} onChangeText={(text) => {this.setState({content:text});}}/>
-                    <TouchableOpacity style={{width:"10%", marginLeft:5}} onPress={() => {this.addLocalContent();}}>
-                        <Text style={{fontSize:13, color:"#50bcdf", fontWeight:"700"}}>댓글</Text>
+                    <TextInput style={{width:"90%", borderWidth:1, borderColor:"#e0e0e0", paddingTop:10}} placeholder="댓글을 입력하세요"  value={this.state.localComment.content} onChangeText={(text) => {this.setState({localComment:{...this.state.localComment, content:text}})}}/>
+                    <TouchableOpacity style={{width:"10%", marginLeft:5}} onPress={() => {this.updateLocalComment();}}>
+                        <Text style={{fontSize:13, color:"#50bcdf", fontWeight:"700"}}>확인</Text>
                     </TouchableOpacity>
                 </View>
             </View>

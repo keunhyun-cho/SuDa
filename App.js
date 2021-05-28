@@ -17,6 +17,7 @@ import SudaMainPage  from './src/screens/SudaMain';
 import SudaAddChatPage  from './src/screens/SudaAddChat';
 import SudaDetailChatPage  from './src/screens/SudaDetailChat';
 import SudaUpdateChatPage  from './src/screens/SudaUpdateChat';
+import SudaTabHomePage  from './src/screens/screens_bottom/SudaTabHome';
 
 
 const Stack = createStackNavigator();
@@ -33,6 +34,7 @@ const App: () => React$Node = () => {
         <Stack.Screen name="SudaAddChatPage" component={SudaAddChatPage} />
         <Stack.Screen name="SudaDetailChatPage" component={SudaDetailChatPage} />
         <Stack.Screen name="SudaUpdateChatPage" component={SudaUpdateChatPage} />
+        <Stack.Screen name="SudaTabHomePage" component={SudaTabHomePage} />
       </Stack.Navigator>
     </NavigationContainer>
   );
