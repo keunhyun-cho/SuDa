@@ -138,11 +138,21 @@ class SudaDetailChat extends Component {
     controlLocalPost(value, localPost) {
         switch(value) {
             case "수정하기":
-                this.props.navigation.navigate("SudaUpdateChatTab", this.state.localPost);
+                this.props.navigation.navigate("SudaUpdateChatTab", {localPostId:localPost.localPostId});
                 break;
 
             case "삭제하기":
-                Alert.alert("", "정말 삭제하시겠습니까?", [{text:"예", onPress:() => Alert.alert("", "게시글 삭제 API 연동 예정") }, {text:"아니오"}]);
+                Alert.alert("", "정말 삭제하시겠습니까?", [{text:"예", onPress:() => {
+                    axios({
+                        method  :"DELETE",
+                        url     :"http://3.35.202.156/api/localPost/" + localPost.localPostId,
+                        headers :{"X-AUTH-TOKEN":GLOBAL.TOKEN},
+                        data    :{}
+                    }).then(({data}) => {
+                        if(data.resultCode == "00")
+                            this.props.navigation.navigation("SudaTabHomeTab", {});
+                    });
+                }}, {text:"아니오"}]);
                 break;
 
             case "신고하기":
