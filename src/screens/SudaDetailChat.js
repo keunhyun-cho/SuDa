@@ -95,7 +95,7 @@ class SudaDetailChat extends Component {
         console.log("[SudaDetailChat] constructor");
 
         super(props);
-        this.state = {localPost:{}, localComment:{comment:""}, localCommentFlag:""};
+        this.state = {localPost:{}, localComment:{content:""}, localCommentFlag:""};
     }
     componentWillReceiveProps(nextProps) {
         console.log("[SudaDetailChat] componentWillReceiveProps");
@@ -253,7 +253,7 @@ class SudaDetailChat extends Component {
                     <CommentList navigation={this.props.navigation}/>
                 </ScrollView>
                 <View style={{marginTop:10, height:40, flexDirection:"row", alignItems:"center"}}>
-                    <TextInput style={{width:"90%", borderWidth:1, borderColor:"#e0e0e0", paddingTop:10}} placeholder="댓글을 입력하세요"  value={this.state.localComment.content} onChangeText={(text) => {this.setState({localComment:{...this.state.localComment, content:text}})}}/>
+                    <TextInput style={{width:"90%", borderWidth:1, borderColor:"#e0e0e0", paddingTop:10}} placeholder="댓글을 입력하세요" value={this.state.localComment.content} onChangeText={(text) => {this.setState({localComment:{...this.state.localComment, content:text}})}}/>
                     <TouchableOpacity style={{width:"10%", marginLeft:5}} onPress={() => {this.updateLocalComment();}}>
                         <Text style={{fontSize:13, color:"#50bcdf", fontWeight:"700"}}>확인</Text>
                     </TouchableOpacity>
