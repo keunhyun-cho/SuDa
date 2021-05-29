@@ -175,7 +175,7 @@ class SudaDetailChat extends Component {
     /* 게시글 좋아요 등록 or 취소(/api/likePost POST or DELETE) 함수 */
     likeLocalPostOrNot() {
         axios({
-            method  :localPost.likeYn ? "DELETE" : "POST",
+            method  :this.state.localPost.likeYn ? "DELETE" : "POST",
             url     :"http://3.35.202.156/api/likePost/" + this.state.localPost.localPostId,
             headers :{"X-AUTH-TOKEN":GLOBAL.TOKEN},
             data    :{}
@@ -239,7 +239,7 @@ class SudaDetailChat extends Component {
                     <Text style={{fontSize:30, textAlignVertical:"center", textAlign:"left", fontWeight:"600"}}>{this.state.localPost.title}</Text>
                     <Text style={{height:30, fontSize:12, textAlignVertical:"center", textAlign:"left", fontWeight:"600", color:"#50bcdf"}}>{this.state.localPost.regMemberNm}</Text>
                     <Text style={{height:30, fontSize:12, textAlignVertical:"top", textAlign:"left", fontWeight:"600", color:"#808080", borderBottomWidth:0.5, borderBottomColor:"#e0e0e0"}}>{this.state.localPost.regDate}</Text>
-                    <Text style={{height:150, fontSize:17, textAlignVertical:"top", textAlign:"left", fontWeight:"600", paddingTop:20}}>{this.state.localPost.content}</Text>
+                    <Text style={{height:130, fontSize:17, textAlignVertical:"top", textAlign:"left", fontWeight:"600", paddingTop:20}}>{this.state.localPost.content}</Text>
                     <View style={{height:20, flexDirection:"row", alignItems:"center", paddingBottom:20, borderBottomWidth:0.5, borderBottomColor:"#e0e0e0"}}>
                         <Icon name="chatbox-ellipses" size={12} color="#808080" style={{marginTop:2}}></Icon>
                         <Text style={{width:35, fontSize:14, color:"#808080", marginLeft:4}}>{this.state.localPost.commentCnt}</Text>
@@ -249,7 +249,7 @@ class SudaDetailChat extends Component {
                         </TouchableOpacity>
                     </View>
                 </View>
-                <ScrollView style={{height:150}}>
+                <ScrollView style={{height:170}}>
                     <CommentList navigation={this.props.navigation}/>
                 </ScrollView>
                 <View style={{marginTop:10, height:40, flexDirection:"row", alignItems:"center"}}>
