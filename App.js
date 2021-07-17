@@ -6,7 +6,11 @@
  * @flow strict-local
  */
 import 'react-native-gesture-handler';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
+import {Text, StyleSheet, View, Button} from 'react-native';
+import {fcmService} from './src/FCMService';
+import {localNotificationService} from './src/LocalNotificationService';
+
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import StartPage from './src/screens/StartScreen';
@@ -22,7 +26,43 @@ import SudaTabHomePage  from './src/screens/screens_bottom/SudaTabHome';
 
 const Stack = createStackNavigator();
 
-const App: () => React$Node = () => {
+export default function App() {
+    useEffect(() => {
+      fcmService.registerAppWithFCM();
+      fcmService.register(onRegister, onNotification, onOpenNotification);
+      localNotificationService.configure(onOpenNotification);
+    },[])
+
+  
+    const onRegister = (token) =>{
+      console.log('[App] onRegister : token :', token);
+    }
+
+    const onNotification = (notify) => {
+      console.log('[App] onNotification : notify :', notify);
+      const options = {
+        soundName: 'default',
+        playSound: true,
+      };
+      localNotificationService.showNotification(
+        0,
+        notify.title,
+        notify.body,
+        notify,
+        options,
+      );
+    }
+
+    const onOpenNotification = async (notify) =>{
+      console.log('[App] onOpenNotification : notify :', notify);
+      alert('Open Notification : notify.body :' + notify.body);
+    }
+    // return () => {
+    //   console.log('[App] unRegister');
+    //   fcmService.unRegister();
+    //   localNotificationService.unregister();
+    // };
+  
   return (
     <NavigationContainer >
       <Stack.Navigator initialRouteName="StartPage" screenOptions={{headerShown:false}} >
@@ -38,5 +78,4 @@ const App: () => React$Node = () => {
       </Stack.Navigator>
     </NavigationContainer>
   );
-};
-export default App;
+}

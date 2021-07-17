@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "50919271230",
+    "project_id": "ops-suda",
+    "storage_bucket": "ops-suda.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:50919271230:android:b57e7a2d1d2dcec88e1a6f",
+        "android_client_info": {
+          "package_name": "com.suda"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "50919271230-dsfd2h56ef5mg9g5iuk4rvdeve3iv1ch.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBzyt0vWVyTLB_bdLx4FSE4ddhClRlH6yA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "50919271230-dsfd2h56ef5mg9g5iuk4rvdeve3iv1ch.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
