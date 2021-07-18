@@ -1,9 +1,11 @@
 import React,{Component} from 'react';
-import {View, Text,TouchableHighlight} from 'react-native';
+import {View, Text,TouchableHighlight, Switch} from 'react-native';
 import ToggleSwitch from 'toggle-switch-react-native';
 import Mailer from 'react-native-mail';
+import GLOBAL from "../Global.js";
 
 export default class SudaTabSet extends Component {
+    state = {switchValue:true};
 
     handleEmail = () => {
         Mailer.mail({
@@ -73,26 +75,23 @@ export default class SudaTabSet extends Component {
                         }}
                 >동수다 팀 드림.</Text>
 
-                <View style={{
-                 
-                }}>
-                    <ToggleSwitch
-                            isOn={false}
-                            onColor="green"
-                            offColor="#00a4ff"
-                            label="알림 받기"
-                            labelStyle={{ fontSize: 16, color: "black", fontWeight: "900" }}
-                            size="medium"
-                            onToggle={isOn => console.log("changed to : ", isOn)}
-                            />
-                    </View>
-                            <TouchableHighlight
-                                    style={{ flex: 1, marginTop:10, justifyContent: 'center', alignItems: 'flex-start', backgroundColor:'#FFFFFF',borderTopWidth:1, borderColor:'#727272' }}
-                                    onPress={this.handleEmail}>
-                                    <Text
-                                        style={{ fontSize: 16 }}
-                                    >동수다 팀에게 연락하기</Text>
-                                </TouchableHighlight>
+                    <View style={{flex:1, flexDirection:"row"}}>  
+                        <Text style={{fontSize:16, color:'black', fontWeight:'900'}}>알림 받기</Text>  
+                        <Switch style={{height:25}} trackColor={{true:'#00a4ff', false:'#808080'}} thumbColor={'#ffffff'} value={this.state.switchValue} onValueChange ={(switchValue) => {
+                            this.setState({switchValue:switchValue}); 
+                            GLOBAL.ISPUSH_SWITCH = switchValue; 
+                            console.log(GLOBAL.ISPUSH_SWITCH);
+
+                            // 알림 받기 여부를 API로 서버에 보내야 함...
+                        }}/>  
+                    </View>  
+                    <TouchableHighlight
+                        style={{ flex: 1, marginTop:10, justifyContent: 'center', alignItems: 'flex-start', backgroundColor:'#FFFFFF',borderTopWidth:1, borderColor:'#727272' }}
+                        onPress={this.handleEmail}>
+                        <Text
+                            style={{ fontSize: 16 }}
+                        >동수다 팀에게 연락하기</Text>
+                    </TouchableHighlight>
             </View>
            
                 {/* <View style={{
