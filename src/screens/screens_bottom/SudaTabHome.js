@@ -89,8 +89,19 @@ class PostList extends Component {
             headers :{"X-AUTH-TOKEN":GLOBAL.TOKEN},
             data    :{}
         }).then(({data}) => {
-            if(data.resultCode == "00") 
+            if(data.resultCode == "00") {
                 this.getLocalPosts();
+
+                // Push 알람 요청
+                axios({
+                    method  :"PUT",
+                    url     :"http://3.35.202.156/api/config/token",
+                    headers :{"X-AUTH-TOKEN":GLOBAL.TOKEN},
+                    data    :{token:GLOBAL.TOKEN}
+                }).then(({data}) => {
+                    console.log(data);
+                });
+            }
         });
     }
 

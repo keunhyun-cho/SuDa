@@ -83,7 +83,7 @@ export default class SudaTabSet extends Component {
                             GLOBAL.ALARM = alarmValue; 
                             console.log(GLOBAL.ALARM);
 
-                            // 알림 받기 여부를 API로 서버에 보내야 함...
+                            // 알림 받기 여부 변경
                             axios({
                                 method  :"PUT",
                                 url     :"http://3.35.202.156/api/config/alarm",
