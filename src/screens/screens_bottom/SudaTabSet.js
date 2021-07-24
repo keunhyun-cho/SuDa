@@ -1,11 +1,12 @@
 import React,{Component} from 'react';
 import {View, Text,TouchableHighlight, Switch} from 'react-native';
-import ToggleSwitch from 'toggle-switch-react-native';
 import Mailer from 'react-native-mail';
 import GLOBAL from "../Global.js";
 
+import axios from "axios";
+
 export default class SudaTabSet extends Component {
-    state = {switchValue:true};
+    state = {alarmValue:true};
 
     handleEmail = () => {
         Mailer.mail({
@@ -77,12 +78,20 @@ export default class SudaTabSet extends Component {
 
                     <View style={{flex:1, flexDirection:"row"}}>  
                         <Text style={{fontSize:16, color:'black', fontWeight:'900'}}>알림 받기</Text>  
-                        <Switch style={{height:25}} trackColor={{true:'#00a4ff', false:'#808080'}} thumbColor={'#ffffff'} value={this.state.switchValue} onValueChange ={(switchValue) => {
-                            this.setState({switchValue:switchValue}); 
-                            GLOBAL.ISPUSH_SWITCH = switchValue; 
-                            console.log(GLOBAL.ISPUSH_SWITCH);
+                        <Switch style={{height:25}} trackColor={{true:'#00a4ff', false:'#808080'}} thumbColor={'#ffffff'} value={this.state.alarmValue} onValueChange ={(alarmValue) => {
+                            this.setState({alarmValue:alarmValue}); 
+                            GLOBAL.ALARM = alarmValue; 
+                            console.log(GLOBAL.ALARM);
 
                             // 알림 받기 여부를 API로 서버에 보내야 함...
+                            axios({
+                                method  :"PUT",
+                                url     :"http://3.35.202.156/api/config/alarm",
+                                headers :{"X-AUTH-TOKEN":GLOBAL.TOKEN},
+                                data    :{alarm:GLOBAL.ALARM}
+                            }).then(({data}) => {
+                                console.log(data);
+                            });
                         }}/>  
                     </View>  
                     <TouchableHighlight
