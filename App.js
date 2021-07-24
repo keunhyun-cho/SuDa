@@ -11,6 +11,8 @@ import {Text, StyleSheet, View, Button} from 'react-native';
 import {fcmService} from './src/FCMService';
 import {localNotificationService} from './src/LocalNotificationService';
 
+import GLOBAL from "./src/screens/Global.js";
+
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import StartPage from './src/screens/StartScreen';
@@ -36,15 +38,7 @@ export default function App() {
   
     const onRegister = (token) =>{
       console.log('[App] onRegister : token :', token);
-      // 알림 고유 식별 토큰정보 설정
-      axios({
-        method  :"PUT",
-        url     :"http://3.35.202.156/api/config/token",
-        headers :{"X-AUTH-TOKEN":GLOBAL.TOKEN},
-        data    :{token:token}
-      }).then(({data}) => {
-          console.log(data);
-      });
+      GLOBAL.ALARM_TOKEN = token;
     }
 
     const onNotification = (notify) => {

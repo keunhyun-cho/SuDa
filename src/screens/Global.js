@@ -2,5 +2,6 @@ module.exports = {
     TOKEN:'',
     MEMBERID:'',
     MEMBERNM:'',
-    ALARM:true
+    ALARM:true,
+    ALARM_TOKEN:'',
 };

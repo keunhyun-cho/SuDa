@@ -55,6 +55,16 @@ class SignOAuth extends Component {
         GLOBAL.TOKEN = data.data.token;
         console.log("GLOBAL.TOKEN = " + GLOBAL.TOKEN);
 
+        // 알림 고유 식별 토큰정보 설정
+        axios({
+          method  :"PUT",
+          url     :"http://3.35.202.156/api/config/token",
+          headers :{"X-AUTH-TOKEN":GLOBAL.TOKEN},
+          data    :{token:GLOBAL.ALARM_TOKEN}
+        }).then(({data}) => {
+            console.log(data);
+        });
+
         this.props.navigation.navigate("SignOAuthMainPage", {LoginId:GLOBAL.MEMBERNM});
       } 
       else 
