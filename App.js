@@ -36,6 +36,15 @@ export default function App() {
   
     const onRegister = (token) =>{
       console.log('[App] onRegister : token :', token);
+      // 알림 고유 식별 토큰정보 설정
+      axios({
+        method  :"PUT",
+        url     :"http://3.35.202.156/api/config/token",
+        headers :{"X-AUTH-TOKEN":GLOBAL.TOKEN},
+        data    :{token:token}
+      }).then(({data}) => {
+          console.log(data);
+      });
     }
 
     const onNotification = (notify) => {
