@@ -40,62 +40,69 @@ class SignOAuth extends Component {
   };
 
   SetSignUp = async () => {
+    const { navigation } = this.props;
+    let signUpData, loginData, tokenData;
+
+    /* 로그인 → 기기 토큰 저장 */
+    // // 1. 회원가입
+    // // 2. 로그인
     // axios({
     //   method:"POST",
     //   url   :"http://3.35.202.156/api/login",
     //   data  :{memberId:350, password:"SM4hv7B"}
     // }).then(({data}) => {
-    //   if(data.resultCode == "00") {
+    //   loginData = data;
+
+    //   if(loginData.resultCode == "00") {
     //     GLOBAL.MEMBERNM = "공덕동_312";
     //     console.log("GLOBAL.MEMBERNM = " + GLOBAL.MEMBERNM);
 
     //     GLOBAL.MEMBERID = 350;
     //     console.log("GLOBAL.MEMBERID = " + GLOBAL.MEMBERID);
 
-    //     GLOBAL.TOKEN = data.data.token;
+    //     GLOBAL.TOKEN = loginData.data.token;
     //     console.log("GLOBAL.TOKEN = " + GLOBAL.TOKEN);
 
-    //     // 알림 고유 식별 토큰정보 설정
+    //     // 3. 알림 고유 식별 토큰정보 설정
     //     axios({
     //       method  :"PUT",
     //       url     :"http://3.35.202.156/api/config/token",
     //       headers :{"X-AUTH-TOKEN":GLOBAL.TOKEN},
     //       data    :{token:GLOBAL.ALARM_TOKEN}
     //     }).then(({data}) => {
-    //         console.log(data);
-    //     });
+    //       tokenData = data;
 
-    //     this.props.navigation.navigate("SignOAuthMainPage", {LoginId:GLOBAL.MEMBERNM});
+    //       if(tokenData.resultCode == "00") 
+    //         navigation.navigate("SignOAuthMainPage", {LoginId:GLOBAL.MEMBERNM});
+    //       else
+    //         Alert.alert("서비스 작업중 입니다.", "앱 재 로그인 바랍니다.",[{text:"확인", onPress: () => console.log("OK Press")}], {cancelable:false});
+    //     });
     //   } 
     //   else 
     //     Alert.alert("서비스 작업중 입니다.", "앱 재 로그인 바랍니다.", [{text:"확인", onPress:() => console.log("OK Press")}], {cancelable:false});
+    // }).catch(e => {  
+    //   console.error(e);
+    //   this.setState({loading:false});
     // });
-    // return;
 
-
-    //setTimeout(()=>{navigation.navigate('SignOAuthMainPage')},3000)
-    let signUpData, loginData, tokenData;
-
-    const { navigation } = this.props;
-    axios
-    .post("http://3.35.202.156/api/signUp",{
-      siNm : '서울시',
-      sggNm :  '마포구',
-      emdNm : '공덕동',
-    })
-    .then(({ data }) => {
+    /* 회원가입 → 로그인 → 기기 토큰 저장 */
+    // 1. 회원가입
+    axios.post("http://3.35.202.156/api/signUp", {
+      siNm  :"서울시",
+      sggNm :"마포구",
+      emdNm :"공덕동",
+    }).then(({data}) => {
       signUpData = data;
 
-      if(signUpData.resultCode=='00'){
-        axios
-        .post("http://3.35.202.156/api/login", {
+      if(signUpData.resultCode == "00") {
+        // 2. 로그인
+        axios.post("http://3.35.202.156/api/login", {
           memberId:signUpData.data.memberId,
           password:signUpData.data.password
-        })
-        .then(({ data }) => {
+        }).then(({data}) => {
           loginData = data;
 
-          if(loginData.resultCode == '00'){
+          if(loginData.resultCode == "00") {
             GLOBAL.MEMBERNM = signUpData.data.memberNm;
             console.log('GLOBAL.MEMBERNM ===> ' + GLOBAL.MEMBERNM);
 
@@ -105,7 +112,7 @@ class SignOAuth extends Component {
             GLOBAL.TOKEN = loginData.data.token;
             console.log('GLOBAL.TOKEN ===> ' + GLOBAL.TOKEN);
 
-            // 알림 고유 식별 토큰정보 설정
+            // 3. 알림 고유 식별 토큰정보 저장
             axios({
               method  :"PUT",
               url     :"http://3.35.202.156/api/config/token",
@@ -114,55 +121,25 @@ class SignOAuth extends Component {
             }).then(({data}) => {
                 tokenData = data;
 
-                if(tokenData.resultCode == '00') 
-                  navigation.navigate('SignOAuthMainPage',{LoginId : signUpData.data.memberNm});
+                if(tokenData.resultCode == "00") 
+                  navigation.navigate("SignOAuthMainPage", {LoginId:GLOBAL.MEMBERNM});
                 else
-                  Alert.alert(
-                    "서비스 작업중 입니다.",
-                    "앱 재 로그인 바랍니다.",
-                    [{
-                        text: "확인",
-                        onPress: () => console.log("OK Press"),
-                    }],
-                    { cancelable: false }
-                  );
+                  Alert.alert("서비스 작업중 입니다.", "앱 재 로그인 바랍니다.",[{text:"확인", onPress: () => console.log("OK Press")}], {cancelable:false});
             });
-          }else{
-            Alert.alert(
-              "서비스 작업중 입니다.",
-              "앱 재 로그인 바랍니다.",
-              [{
-                  text: "확인",
-                  onPress: () => console.log("OK Press"),
-              }],
-              { cancelable: false }
-            );
           }
-        
+          else 
+            Alert.alert("서비스 작업중 입니다.", "앱 재 로그인 바랍니다.",[{text:"확인", onPress: () => console.log("OK Press")}], {cancelable:false});
         })
-      }else{
-        Alert.alert(
-          "서비스 작업중 입니다.",
-          "앱 재 로그인 바랍니다.",
-          [{
-              text: "확인",
-              onPress: () => console.log("OK Press"),
-           }],
-          { cancelable: false }
-        );
       }
-    
-    })
-    .catch(e => {  // API 호출이 실패한 경우
-      console.error(e);  // 에러표시
-      this.setState({  
-        loading: false
-      });
+      else
+        Alert.alert("서비스 작업중 입니다.", "앱 재 로그인 바랍니다.",[{text:"확인", onPress: () => console.log("OK Press")}], {cancelable:false});
+    }).catch(e => {  
+      console.error(e);
+      this.setState({loading:false});
     });
   }
 
-
-  render(){
+  render() {
 
     const { navigation } = this.props;
     let isComplete = true; 

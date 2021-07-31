@@ -88,7 +88,7 @@ export default class SudaTabSet extends Component {
                                 method  :"PUT",
                                 url     :"http://3.35.202.156/api/config/alarm",
                                 headers :{"X-AUTH-TOKEN":GLOBAL.TOKEN},
-                                data    :{alarm:GLOBAL.ALARM}
+                                data    :{alarm:GLOBAL.ALARM, receive:GLOBAL.ALARM}
                             }).then(({data}) => {
                                 console.log(data);
                             });
